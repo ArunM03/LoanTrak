@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/name"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/ed_name"
+            android:background="@color/grey_100"
+            android:hint="@string/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            android:textColor="@color/black" />
+
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_action_contact"
+        app:tint="@color/blue"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@id/ed_name"
+        app:layout_constraintBottom_toBottomOf="@id/ed_name"
+        android:id="@+id/ib_contact"/>
+
+            <TextView
+                android:id="@+id/tv_phonenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="@string/phone"
+                android:textColor="@color/blue_200"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ed_name" />
+
+                <TextView
+                    android:id="@+id/ed_phonenumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey_100"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/phone_number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@id/tv_phonenumber"
+                    app:layout_constraintTop_toBottomOf="@id/tv_phonenumber"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/amount"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_phonenumber" />
+
+
+        <EditText
+            android:id="@+id/ed_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_100"
+            android:fontFamily="@font/inter_regular"
+            android:hint="@string/enter_amount"
+            android:layout_marginTop="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            android:maxLength="12"
+            app:layout_constraintStart_toStartOf="@id/tv_amount"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount"
+            android:inputType="numberDecimal"
+            android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/description"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_amount" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/ed_description"
+                android:background="@color/grey_100"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="@id/tv_amount"
+                app:layout_constraintTop_toBottomOf="@id/tv_description"
+                android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/startdate"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_description" />
+
+
+        <TextView
+            android:id="@+id/tv_dateValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_100"
+            android:fontFamily="@font/inter_regular"
+            tools:text="12, June 2022"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/tv_amount"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            android:textColor="@color/black" />
+
+
+
+            <TextView
+                android:id="@+id/tv_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="@string/duration"
+                android:textColor="@color/blue_200"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_dateValue" />
+
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/ed_yrs"
+                android:background="@color/grey_100"
+                android:hint="@string/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@id/tv_amount"
+                app:layout_constraintTop_toBottomOf="@id/tv_enddate"
+                android:textColor="@color/black" />
+
+
+
+            <TextView
+                android:id="@+id/tv_yrs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:text="mths"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@id/ed_months"
+                app:layout_constraintTop_toTopOf="@id/ed_months"
+                app:layout_constraintBottom_toBottomOf="@id/ed_months"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/ed_months"
+                android:background="@color/grey_100"
+                android:hint="@string/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@id/tv_mnths"
+                app:layout_constraintTop_toBottomOf="@id/tv_enddate"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:id="@+id/tv_mnths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:text="yrs"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/ed_yrs"
+                app:layout_constraintStart_toEndOf="@id/ed_yrs"
+                app:layout_constraintTop_toTopOf="@id/ed_yrs"/>
+
+            <TextView
+                android:id="@+id/tv_interest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="@string/interest"
+                android:textColor="@color/blue_200"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ed_months" />
+
+
+                <EditText
+                    android:id="@+id/ed_interest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey_100"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/enter_interest"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@id/tv_amount"
+                    app:layout_constraintTop_toBottomOf="@id/tv_interest"
+                    android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_emi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="@string/emi"
+                android:textColor="@color/blue_200"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ed_interest" />
+
+                <EditText
+                    android:id="@+id/ed_emi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/grey_100"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/enter_emi"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@id/tv_amount"
+                    app:layout_constraintTop_toBottomOf="@id/tv_emi"/>
+
+
+     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cd_addloan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_emi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35000002"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

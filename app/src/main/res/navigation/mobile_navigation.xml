@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/splashScreenFragment">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.loantrackingsystem.app.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_addLoanFragment"
+            app:destination="@id/addLoanFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_viewLoanFragment"
+            app:destination="@id/viewLoanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.loantrackingsystem.app.ui.dashboard.DashboardFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_nav_gallery_to_addLoanFragment"
+            app:destination="@id/addLoanFragment" />
+        <action
+            android:id="@+id/action_nav_gallery_to_viewLoanFragment"
+            app:destination="@id/viewLoanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.loantrackingsystem.app.ui.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_pinFragment"
+            app:destination="@id/pinFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_loginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.loantrackingsystem.app.ui.login.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_pinFragment"
+            app:destination="@id/pinFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/pinFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/pinFragment"
+        android:name="com.loantrackingsystem.app.ui.login.PinFragment"
+        android:label="PinFragment">
+        <action
+            android:id="@+id/action_pinFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/mobile_navigation"/>
+        <action
+            android:id="@+id/action_pinFragment_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLoanFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.AddLoanFragment"
+        android:label="@string/addloan" />
+    <fragment
+        android:id="@+id/viewLoanFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.ViewLoanFragment"
+        android:label="@string/viewloan" />
+    <fragment
+        android:id="@+id/loanHistoryFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.LoanHistoryFragment"
+        android:label="@string/menu_slideshow" >
+        <action
+            android:id="@+id/action_loanHistoryFragment_to_viewLoanFragment"
+            app:destination="@id/viewLoanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.loantrackingsystem.app.ui.login.LanguageFragment"
+        android:label="LanguageFragment" >
+        <action
+            android:id="@+id/action_languageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.loantrackingsystem.app.ui.login.SplashScreenFragment"
+        android:label="SplashScreenFragment" >
+
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/splashScreenFragment"/>
+        <action
+            android:id="@+id/action_splashScreenFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_nav_gallery2"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_pinFragment"
+            app:destination="@id/pinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.loantrackingsystem.app.ui.home.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>
