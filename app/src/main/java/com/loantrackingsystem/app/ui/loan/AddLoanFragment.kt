@@ -71,7 +71,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         date = Calendar.getInstance().timeInMillis.toString()
 
-         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
+        loanPersons = mutableListOf<String>(getString(R.string.selectperson))
 
         binding.cdAddloan.setOnClickListener {
 
@@ -163,7 +163,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
             setSpinner(binding.edName,loanPersons,true)
         })
 
-  /*      binding.tvEnddateValue.setOnClickListener {
+  /*    binding.tvEnddateValue.setOnClickListener {
 
             showDatePickerDialog(true)
 

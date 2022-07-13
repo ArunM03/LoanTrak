@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.loantrackingsystem.app.data.UserData
 import com.loantrackingsystem.app.databinding.ActivityMainBinding
 import com.loantrackingsystem.app.other.Constants
 import com.loantrackingsystem.app.other.SharedPref
@@ -74,8 +75,9 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.layoutMain.bottomView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-                if(item.itemId ==   R.id.inviteus ){
-                    share()
+                if(item.itemId ==   R.id.profileFragment ){
+                    Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.profileFragment)
                 }
                 if(item.itemId ==   R.id.nav_gallery ){
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
@@ -111,11 +113,18 @@ class MainActivity : AppCompatActivity() {
                                     .navigate(R.id.languageFragment)
                                 true
                             }
-                         /*   R.id.set_profile -> {
-                                Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
-                                    .navigate(R.id.profileFragment)
+                            R.id.action_inviteus -> {
+                                share()
                                 true
-                            }*/
+                            }
+                            R.id.action_logout -> {
+                                Constants.isLanguageChanged = false
+                                sharedPref.setUserData(UserData())
+                                sharedPref.setUserLoginStatus()
+                                startActivity(Intent(this@MainActivity,MainActivity::class.java))
+                                finish()
+                                true
+                            }
                             else ->{
                                 true
                             }

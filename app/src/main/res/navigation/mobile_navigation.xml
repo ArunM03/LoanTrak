@@ -121,8 +121,10 @@
             android:id="@+id/action_splashScreenFragment_to_pinFragment"
             app:destination="@id/pinFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.loantrackingsystem.app.ui.home.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="Groups" />
+
 </navigation>

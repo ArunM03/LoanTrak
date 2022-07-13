@@ -74,6 +74,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         }
 
+        binding.switchHideshow.setOnCheckedChangeListener { compoundButton, b ->
+            if(b){
+                binding.tvTotalloanamount.visibility = View.VISIBLE
+            }else{
+                binding.tvTotalloanamount.visibility = View.GONE
+            }
+        }
+
         binding.rvLoans.adapter = loanHistoryAdapter
         binding.rvLoans.layoutManager = LinearLayoutManager(requireContext())
 

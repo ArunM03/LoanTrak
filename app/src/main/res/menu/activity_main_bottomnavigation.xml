@@ -17,9 +17,9 @@
             android:icon="@drawable/ic_action_plus"
             android:title="@string/addloan" />
         <item
-            android:id="@+id/inviteus"
-            android:icon="@drawable/ic_action_shareus"
-            android:title="@string/menu_inviteus" />
+            android:id="@+id/profileFragment"
+            android:icon="@drawable/ic_action_group"
+            android:title="Group" />
         <item
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_action_more"

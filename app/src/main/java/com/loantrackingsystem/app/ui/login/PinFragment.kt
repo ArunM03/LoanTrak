@@ -49,23 +49,29 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
 
         binding.ivLogin.setImageResource(curIllust)
 
+        if(Constants.isSetPin){
+            binding.cdConfirmpin.visibility = View.VISIBLE
+        }else{
+            binding.cdConfirmpin.visibility = View.GONE
+        }
+
        // Toast.makeText(requireContext(), "$userData", Toast.LENGTH_SHORT).show()
 
         binding.cdLogin.setOnClickListener {
 
             val pin = binding.edPin.text.toString()
+            val confirmPin = binding.edConfirmpin.text.toString()
 
             if(pin.isNotEmpty()){
 
                 if(Constants.isSetPin){
 
-                    if(isFirstTimePin.isEmpty()){
-                        isFirstTimePin = pin
-                        binding.edPin.setText("")
-                        binding.edPin.setHint("Please Enter the pin again")
+                    if(pin.isEmpty() || confirmPin.isEmpty()){
+                        Toast.makeText(requireContext(), "Please enter pin", Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }else{
-                        if (isFirstTimePin == pin){
+
+                        if (pin == confirmPin){
                             mainViewModel.updateUser(userData.apply {
                                 this.pin = pin
                             })

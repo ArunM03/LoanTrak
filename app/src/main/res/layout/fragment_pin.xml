@@ -38,14 +38,39 @@
             android:background="@color/grey_100"
             android:fontFamily="@font/inter_regular"
             android:hint="@string/enter_pinorpassword"
-            android:textColorHint="@color/black"
             android:padding="16dp"
             android:inputType="textPassword"
-            android:gravity="center"
+            android:gravity="start"
             android:maxLength="4"
             android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cd_confirmpin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cd_pin"
+        app:layout_constraintWidth_percent="0.9">
+
+        <EditText
+            android:id="@+id/ed_confirmpin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_100"
+            android:fontFamily="@font/inter_regular"
+            android:hint="@string/confirm_pin"
+            android:padding="16dp"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textColor="@color/black" />
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cd_login"
@@ -56,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cd_pin"
+        app:layout_constraintTop_toBottomOf="@id/cd_confirmpin"
         app:layout_constraintVertical_bias="0.110000014"
         app:layout_constraintWidth_percent="0.8">
 

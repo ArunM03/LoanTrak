@@ -34,6 +34,13 @@ class SharedPref(context: Context) {
         return sharedpref.getBoolean(SETPIN,false)
     }
 
+    fun setUserLoginStatus() {
+        editor.apply {
+            putBoolean(USERLOGIN,false)
+            apply()
+        }
+    }
+
     fun getUserLoginStatus() : Boolean{
         return sharedpref.getBoolean(USERLOGIN,false)
     }
