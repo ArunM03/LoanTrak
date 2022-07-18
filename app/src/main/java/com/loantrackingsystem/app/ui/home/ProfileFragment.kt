@@ -9,6 +9,7 @@ import com.loantrackingsystem.adapter.GroupAdapter
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.databinding.FragmentHomeBinding
 import com.loantrackingsystem.app.databinding.FragmentProfileBinding
+import com.loantrackingsystem.app.firebase.FirebaseViewmodel
 import com.loantrackingsystem.app.other.SharedPref
 import com.loantrackingsystem.app.room.MainViewModelFactory
 import com.loantrackingsystem.app.room.MainViewmodel
@@ -17,7 +18,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     lateinit var binding : FragmentProfileBinding
     lateinit var adapter : GroupAdapter
-    lateinit var mainViewModel: MainViewmodel
+    lateinit var mainViewModel: FirebaseViewmodel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,11 +30,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setUI(view: View) {
 
-        val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
+/*        val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
 
         mainViewModel =
-            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)
+            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)*/
 
+        mainViewModel =
+            ViewModelProvider(this).get(
+                FirebaseViewmodel::class.java)
 
         adapter = GroupAdapter()
         binding.rvPeople.adapter = adapter
@@ -41,13 +45,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val sharedPref = SharedPref(requireContext())
 
-        val userData = sharedPref.getUserData()
+        val userData = sharedPref.getUserDataModel()
 
+        mainViewModel.getLoanPerson(userData.userId)
+
+/*
         mainViewModel.getAllLoanPerson(userData.username).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.loanHistoryList = it
         })
+*/
 
-
+        mainViewModel.getLoanPersonLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            adapter.loanHistoryList = it
+        })
 
 
     }

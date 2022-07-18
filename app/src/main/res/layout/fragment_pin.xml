@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cd_login"
         app:layout_constraintVertical_bias="0.100000024"
         app:layout_constraintWidth_percent="0.9" />
 
@@ -26,9 +26,10 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_login"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.9">
 
         <EditText
@@ -39,7 +40,7 @@
             android:fontFamily="@font/inter_regular"
             android:hint="@string/enter_pinorpassword"
             android:padding="16dp"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:gravity="start"
             android:maxLength="4"
             android:textColor="@color/black" />

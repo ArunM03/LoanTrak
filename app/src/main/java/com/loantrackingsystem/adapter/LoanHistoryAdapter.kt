@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.loantrackingsystem.app.R
-import com.loantrackingsystem.app.data.LoanData
+import com.loantrackingsystem.app.data.LoanDataModel
 import com.loantrackingsystem.app.databinding.RvLoanhistoryBinding
 import com.loantrackingsystem.app.other.Constants
 import java.text.SimpleDateFormat
@@ -17,20 +17,20 @@ class LoanHistoryAdapter(val isPending : Boolean = false)  : RecyclerView.Adapte
 
     class LoanHistoryViewHolder(val binding : RvLoanhistoryBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private var onItemClickListener: ((LoanData) -> Unit)? = null
+    private var onItemClickListener: ((LoanDataModel) -> Unit)? = null
 
-    fun setOnItemClickListener(position: (LoanData) -> Unit) {
+    fun setOnItemClickListener(position: (LoanDataModel) -> Unit) {
         onItemClickListener = position
     }
 
 
-    private val diffCallback = object : DiffUtil.ItemCallback<LoanData>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<LoanDataModel>() {
 
-        override fun areContentsTheSame(oldItem: LoanData, newItem: LoanData): Boolean {
+        override fun areContentsTheSame(oldItem: LoanDataModel, newItem: LoanDataModel): Boolean {
             return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItem: LoanData, newItem: LoanData): Boolean {
+        override fun areItemsTheSame(oldItem: LoanDataModel, newItem: LoanDataModel): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -39,7 +39,7 @@ class LoanHistoryAdapter(val isPending : Boolean = false)  : RecyclerView.Adapte
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    var loanHistoryList : List<LoanData>
+    var loanHistoryList : List<LoanDataModel>
         get() = differ.currentList
         set(value) = differ.submitList(value)
 

@@ -1,62 +1,33 @@
 {
   "project_info": {
-    "project_number": "369474283847",
-    "project_id": "fir-cricket-app",
-    "storage_bucket": "fir-cricket-app.appspot.com"
+    "project_number": "617930775716",
+    "project_id": "loantrak-f165d",
+    "storage_bucket": "loantrak-f165d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:369474283847:android:97979ef423f7520d6f0462",
+        "mobilesdk_app_id": "1:617930775716:android:37eb6c0ad34369b6351a31",
         "android_client_info": {
           "package_name": "com.loantrackingsystem.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "369474283847-uhvtdleb6qsgn1rnrdu41i8j69qv3v4n.apps.googleusercontent.com",
+          "client_id": "617930775716-vbo5lo1k64rpom3t41sca104dj0s8sjh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCn5FCE7ThwIoFTSNQnqZ6aOLkEE4cTT_g"
+          "current_key": "AIzaSyDBezdgCwVuBZILwf-9ORY7YlkX3VEQx6A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "369474283847-uhvtdleb6qsgn1rnrdu41i8j69qv3v4n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:369474283847:android:3f21ff8a8be5e5876f0462",
-        "android_client_info": {
-          "package_name": "com.mymedicard.democricketapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "369474283847-uhvtdleb6qsgn1rnrdu41i8j69qv3v4n.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCn5FCE7ThwIoFTSNQnqZ6aOLkEE4cTT_g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "369474283847-uhvtdleb6qsgn1rnrdu41i8j69qv3v4n.apps.googleusercontent.com",
+              "client_id": "617930775716-vbo5lo1k64rpom3t41sca104dj0s8sjh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

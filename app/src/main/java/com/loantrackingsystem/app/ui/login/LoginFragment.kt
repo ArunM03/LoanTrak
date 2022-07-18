@@ -17,7 +17,9 @@ import com.loantrackingsystem.adapter.ViewPageAdapter
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.UserData
 import com.loantrackingsystem.app.databinding.FragmentLoginBinding
+import com.loantrackingsystem.app.firebase.FirebaseViewmodel
 import com.loantrackingsystem.app.other.Constants
+import com.loantrackingsystem.app.other.MyDialog
 import com.loantrackingsystem.app.other.SharedPref
 import com.loantrackingsystem.app.room.MainViewModelFactory
 import com.loantrackingsystem.app.room.MainViewmodel
@@ -28,9 +30,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     lateinit var binding : FragmentLoginBinding
-    lateinit var mainViewModel: MainViewmodel
+    lateinit var mainViewModel: FirebaseViewmodel
     var allUsers = listOf<UserData>()
     lateinit var sharedPref : SharedPref
+    lateinit var myDialog: MyDialog
     var currentPage = 0
     var timer: Timer? = null
     val DELAY_MS: Long = 500 //delay in milliseconds before task is to be executed
@@ -56,14 +59,38 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setUI(view: View) {
 
+/*
         val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
         mainViewModel =
             ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)
+*/
+
+        mainViewModel =
+            ViewModelProvider(this).get(FirebaseViewmodel::class.java)
+
+        myDialog = MyDialog(requireContext())
+
+        mainViewModel.userLoginLive.observe(viewLifecycleOwner, Observer {
+
+            myDialog.dismissProgressDialog()
+
+            sharedPref.setUserDataModel(it)
+            Constants.userDataModel = it
+
+            if(Constants.isFirstTime){
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_loginFragment_to_nav_home)
+            }else{
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_loginFragment_to_nav_gallery)
+            }
+        })
 
 
-        mainViewModel.allUsers.observe(viewLifecycleOwner, Observer {
+        mainViewModel.errorUserLoginLive.observe(viewLifecycleOwner, Observer {
 
-            allUsers = it
+            myDialog.dismissProgressDialog()
+            myDialog.showErrorAlertDialog(it)
 
         })
 
@@ -81,32 +108,25 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             if(userName.isNotEmpty() && password.isNotEmpty()){
 
-                val users1 = allUsers.filter { it.username == userName }
-                if(users1.isNotEmpty()){
-                    val users2 = users1.filter { it.password  == password}
-                    if(users2.isNotEmpty()){
+              //  val users1 = allUsers.filter { it.username == userName }
+            //    if(users1.isNotEmpty()){
+                //    val users2 = users1.filter { it.password  == password}
+                   // if(users2.isNotEmpty()){
 
-                        sharedPref.setUserData(users2[0])
-                        Constants.userData  = users2[0]
+                mainViewModel.loginUser(userName, password)
 
-                        if(Constants.isFirstTime){
-                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                                .navigate(R.id.action_loginFragment_to_nav_home)
-                        }else{
-                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                                .navigate(R.id.action_loginFragment_to_nav_gallery)
-                        }
+                myDialog.showProgressDialog("Loging In..Please wait",this)
 
-                    }else {
+             /*       }else {
                         Toast.makeText(
                             requireContext(),
                             getString(R.string.wrongpassword),
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                }else{
+                    }*/
+       /*         }else{
                     Toast.makeText(requireContext(), getString(R.string.wrongusername), Toast.LENGTH_SHORT).show()
-                }
+                }*/
 
             }else{
                 Toast.makeText(requireContext(), getString(R.string.pleaseenteralldetails), Toast.LENGTH_SHORT).show()

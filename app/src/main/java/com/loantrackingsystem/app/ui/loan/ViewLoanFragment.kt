@@ -20,10 +20,14 @@ import com.loantrackingsystem.adapter.LoanHistoryAdapter
 import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.LoanData
+import com.loantrackingsystem.app.data.LoanDataModel
 import com.loantrackingsystem.app.data.LoanPersonData
+import com.loantrackingsystem.app.data.LoanPersonDataModel
 import com.loantrackingsystem.app.databinding.FragmentLoanhistoryBinding
 import com.loantrackingsystem.app.databinding.FragmentViewloanBinding
+import com.loantrackingsystem.app.firebase.FirebaseViewmodel
 import com.loantrackingsystem.app.other.Constants
+import com.loantrackingsystem.app.other.MyDialog
 import com.loantrackingsystem.app.room.MainViewModelFactory
 import com.loantrackingsystem.app.room.MainViewmodel
 import java.text.SimpleDateFormat
@@ -32,7 +36,7 @@ import java.util.*
 class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
     lateinit var binding : FragmentViewloanBinding
-    lateinit var mainViewModel: MainViewmodel
+    lateinit var mainViewModel: FirebaseViewmodel
     var date = ""
     var number = ""
     lateinit var delete : ImageButton
@@ -40,8 +44,9 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
     var endDate = "0L"
     var isNew = false
     lateinit var loanPersons : MutableList<String>
+    lateinit var myDialog: MyDialog
     var isEnabled = false
-    val loanReason = listOf("Car Loan","Hand Loan","Personal Loan","Education Loan","Home renovation Loan")
+    val loanReason = listOf("Car Loan","Hand Loan","Personal Loan","Education Loan","Home renovation Loan","Other")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,15 +59,22 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
     private fun setUI(view: View) {
 
 
-        val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
+  /*      val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
         mainViewModel =
-            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)
+            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)*/
+
+
+        mainViewModel =
+            ViewModelProvider(this).get(
+                FirebaseViewmodel::class.java)
+
+        myDialog = MyDialog(requireContext())
 
         binding.parentConstraint.deepForEach { isEnabled = false }
 
         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
 
-        setSpinner(binding.edDescription, loanReason)
+        setSpinner(binding.edDescription, loanReason,true)
 
         val activity = activity as MainActivity
         delete = activity.findViewById<ImageButton>(R.id.ib_delete)
@@ -92,12 +104,13 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         binding.cdAddloan.setOnClickListener {
 
-            val name = binding.edName.selectedItem.toString()
+            val name = binding.edName.text.toString()
             val phone = binding.edPhonenumber.text.toString()
             val amount = binding.edAmount.text.toString()
-            val interest = binding.edAmount.text.toString()
-            val emi = binding.edAmount.text.toString()
+            val interest = binding.edInterest.text.toString()
+            val emi = binding.edEmi.text.toString()
             val description = binding.edDescription.selectedItem.toString()
+            val otherreason = binding.edOthereasons.text.toString()
 
             val status = if (binding.rbPaid.isChecked){
                 Constants.PAID
@@ -107,15 +120,26 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
             if(name != getString(R.string.selectperson) && interest.isNotEmpty() && emi.isNotEmpty() && amount.isNotEmpty() && description.isNotEmpty() && date.isNotEmpty()){
 
-                mainViewModel.updateLoan(LoanData(name,phone, amount,description,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid, Constants.loanData.loanID))
-
-                if(isNew){
-                    mainViewModel.addLoanPerson(LoanPersonData(name,phone,Constants.loanData.userid))
+                if(description == "Other" && otherreason.isEmpty()){
+                    Toast.makeText(requireContext(), "Please enter other reason", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                val reason = if(description == "Other"){
+                    otherreason
+                }else{
+                    description
                 }
 
-                Toast.makeText(requireContext(), getString(R.string.updated) , Toast.LENGTH_SHORT).show()
 
-                requireActivity().onBackPressed()
+                mainViewModel.addLoan(LoanDataModel(name,phone, amount,reason,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid, Constants.loanData.loanID),Constants.loanData.userid)
+
+
+
+                if(isNew){
+               //     mainViewModel.addLoanPerson(LoanPersonData(name,phone,Constants.loanData.userid))
+                }
+
+                myDialog.showProgressDialog("Updating...Please wait",this)
 
             }else{
                 Toast.makeText(requireContext(), getString(R.string.pleaseenteralldetails), Toast.LENGTH_SHORT).show()
@@ -142,17 +166,55 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         }
 
-        mainViewModel.getAllLoanPerson(Constants.loanData.userid).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            loanPersons.addAll(getNames(it))
-            setSpinner(binding.edName,loanPersons)
+        mainViewModel.addLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            myDialog.dismissProgressDialog()
+
+            Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT)
+                .show()
+
+            requireActivity().onBackPressed()
+
+        })
+
+/*
+        mainViewModel.getLoanPerson(Constants.loanData.userid)
+
+        mainViewModel.getLoanPersonLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            loanPersons.addAll(getNames2(it))
+        //    setSpinner(binding.edName,loanPersons)
             val index = loanPersons.indexOf(Constants.loanData.name)
             if(index >= 0){
                 binding.edName.setSelection(index)
             }
         })
+*/
 
+        mainViewModel.errorAddLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
+            myDialog.dismissProgressDialog()
 
+            myDialog.showErrorAlertDialog(it)
+
+        })
+
+        mainViewModel.deleteLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            myDialog.dismissProgressDialog()
+
+            Toast.makeText(requireContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show()
+
+            requireActivity().onBackPressed()
+
+        })
+
+        mainViewModel.errorDeleteLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            myDialog.dismissProgressDialog()
+
+            myDialog.showErrorAlertDialog(it)
+
+        })
 
 
     }
@@ -165,9 +227,16 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         }
         return names
     }
+    fun getNames2(loanPersonData: List<LoanPersonDataModel>) : MutableList<String>{
 
+        val names = mutableListOf<String>()
+        for (person in loanPersonData){
+            names.add(person.name)
+        }
+        return names
+    }
 
-    fun setSpinner(spinner: Spinner, spinnerList : List<String>) {
+    fun setSpinner(spinner: Spinner, spinnerList : List<String>, isReason : Boolean = false) {
         val adapter = object :
             ArrayAdapter<Any>(
                 requireContext(), R.layout.sp_layout,
@@ -197,7 +266,13 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
             override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
-
+                if(isReason) {
+                    if (spinner.selectedItem.toString() == "Other"){
+                        binding.edOthereasons.visibility = View.VISIBLE
+                    }else{
+                        binding.edOthereasons.visibility = View.GONE
+                    }
+                }
 
             }
         }
@@ -223,9 +298,18 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         date = data.date
 
+        binding.edName.text = data.name
+
         binding.edAmount.setText(data.amount.toString())
         binding.edPhonenumber.text = data.phone
-        binding.edDescription.setSelection(loanReason.indexOf(data.description))
+        if(loanReason.contains(data.description)){
+            binding.edDescription.setSelection(5)
+        }else{
+            binding.edOthereasons.visibility = View.VISIBLE
+            binding.edOthereasons.setText(data.description)
+        }
+
+
         binding.tvDateValue.text = getDate(data.date.toLong())
         if(data.endDate == "0L"){
             binding.tvEnddateValue.text = getString(R.string.selectdate)
@@ -269,7 +353,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
     }
 
-    @SuppressLint("Range", "Recycle")
+/*    @SuppressLint("Range", "Recycle")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -310,7 +394,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         }
 
-    }
+    }*/
 
     fun showAlertDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -318,7 +402,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             .setMessage(getString(R.string.areyousuredoyouwanttodeleteit))
             .setPositiveButton("Yes"){  _,_ ->
                 mainViewModel.deleteLoan(Constants.loanData)
-                requireActivity().onBackPressed()
+                myDialog.showProgressDialog("Deleting...Please wait",this)
             }
             .setNegativeButton("No",null)
             .show()

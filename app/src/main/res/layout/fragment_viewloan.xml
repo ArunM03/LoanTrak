@@ -38,11 +38,12 @@
                 android:layout_marginStart="16dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                app:layout_constraintWidth_percent="0.8"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name">
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <TextView
                     android:id="@+id/ed_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -59,6 +60,7 @@
                 android:src="@drawable/ic_action_contact"
                 app:tint="@color/blue"
                 android:padding="6dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 android:layout_marginTop="16dp"
@@ -155,6 +157,21 @@
                 app:layout_constraintTop_toBottomOf="@id/cd_amount" />
 
 
+            <EditText
+                android:id="@+id/ed_othereasons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:hint="Enter reason"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/tv_amount"
+                app:layout_constraintTop_toBottomOf="@id/ed_description"
+                android:textColor="@color/black" />
+
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/ed_description"
                     android:background="@color/grey_100"
@@ -182,7 +199,7 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ed_description" />
+                app:layout_constraintTop_toBottomOf="@id/ed_othereasons" />
 
 
             <com.google.android.material.card.MaterialCardView

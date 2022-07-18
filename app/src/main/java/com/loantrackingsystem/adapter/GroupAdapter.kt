@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.loantrackingsystem.app.R
-import com.loantrackingsystem.app.data.LoanPersonData
+import com.loantrackingsystem.app.data.LoanPersonDataModel
 import com.loantrackingsystem.app.databinding.RvGroupBinding
 import com.loantrackingsystem.app.databinding.RvLoanhistoryBinding
 import com.loantrackingsystem.app.other.Constants
@@ -19,20 +19,20 @@ class GroupAdapter()  : RecyclerView.Adapter<GroupAdapter.LoanHistoryViewHolder>
 
     class LoanHistoryViewHolder(val binding : RvGroupBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private var onItemClickListener: ((LoanPersonData) -> Unit)? = null
+    private var onItemClickListener: ((LoanPersonDataModel) -> Unit)? = null
 
-    fun setOnItemClickListener(position: (LoanPersonData) -> Unit) {
+    fun setOnItemClickListener(position: (LoanPersonDataModel) -> Unit) {
         onItemClickListener = position
     }
 
 
-    private val diffCallback = object : DiffUtil.ItemCallback<LoanPersonData>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<LoanPersonDataModel>() {
 
-        override fun areContentsTheSame(oldItem: LoanPersonData, newItem: LoanPersonData): Boolean {
+        override fun areContentsTheSame(oldItem: LoanPersonDataModel, newItem: LoanPersonDataModel): Boolean {
             return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItem: LoanPersonData, newItem: LoanPersonData): Boolean {
+        override fun areItemsTheSame(oldItem: LoanPersonDataModel, newItem: LoanPersonDataModel): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -41,7 +41,7 @@ class GroupAdapter()  : RecyclerView.Adapter<GroupAdapter.LoanHistoryViewHolder>
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    var loanHistoryList : List<LoanPersonData>
+    var loanHistoryList : List<LoanPersonDataModel>
         get() = differ.currentList
         set(value) = differ.submitList(value)
 

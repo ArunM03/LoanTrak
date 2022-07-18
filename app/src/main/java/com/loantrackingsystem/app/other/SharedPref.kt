@@ -3,6 +3,7 @@ package com.loantrackingsystem.app.other
 import android.content.Context
 import com.google.gson.Gson
 import com.loantrackingsystem.app.data.UserData
+import com.loantrackingsystem.app.data.UserDataModel
 
 
 class SharedPref(context: Context) {
@@ -16,6 +17,14 @@ class SharedPref(context: Context) {
     val SETPIN = "SetPin"
 
     fun setUserData(userData: UserData){
+        val gson =  Gson()
+        val json = gson.toJson(userData)
+        editor.putString(USERDATA, json)
+        editor.putBoolean(USERLOGIN,true)
+        editor.commit()
+    }
+
+    fun setUserDataModel(userData: UserDataModel){
         val gson =  Gson()
         val json = gson.toJson(userData)
         editor.putString(USERDATA, json)
@@ -50,6 +59,14 @@ class SharedPref(context: Context) {
         val json = sharedpref.getString(USERDATA, "null")
         return gson.fromJson(json, UserData::class.java)
     }
+
+
+    fun getUserDataModel() : UserDataModel{
+        val gson = Gson()
+        val json = sharedpref.getString(USERDATA, "null")
+        return gson.fromJson(json, UserDataModel::class.java)
+    }
+
 
     fun setLanguage(language: String) {
         editor.apply {

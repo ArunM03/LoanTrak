@@ -10,7 +10,9 @@ import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.UserData
 import com.loantrackingsystem.app.databinding.FragmentPinBinding
 import com.loantrackingsystem.app.databinding.FragmentRegisterBinding
+import com.loantrackingsystem.app.firebase.FirebaseViewmodel
 import com.loantrackingsystem.app.other.Constants
+import com.loantrackingsystem.app.other.MyDialog
 import com.loantrackingsystem.app.other.SharedPref
 import com.loantrackingsystem.app.room.MainViewModelFactory
 import com.loantrackingsystem.app.room.MainViewmodel
@@ -22,7 +24,8 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
     lateinit var binding : FragmentPinBinding
     lateinit var sharedPref : SharedPref
     var isFirstTimePin = ""
-    lateinit var mainViewModel: MainViewmodel
+    lateinit var mainViewModel: FirebaseViewmodel
+    lateinit var myDialog : MyDialog
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,12 +38,18 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
 
     private fun setUI(view: View) {
 
-        val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
+/*        val mainViewModelFactory = MainViewModelFactory(requireActivity().application)
         mainViewModel =
-            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)
+            ViewModelProvider(this, mainViewModelFactory).get(MainViewmodel::class.java)*/
 
+        mainViewModel =
+            ViewModelProvider(this).get(
+                FirebaseViewmodel::class.java)
 
-        val userData = sharedPref.getUserData()
+        myDialog = MyDialog(requireContext())
+
+        //val userData = sharedPref.getUserData()
+        val userData = sharedPref.getUserDataModel()
 
 
         val illusList = listOf(R.drawable.languageillustration,R.drawable.login_illustration,R.drawable.protection_illustration)
@@ -54,6 +63,30 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         }else{
             binding.cdConfirmpin.visibility = View.GONE
         }
+
+        mainViewModel.errorPinCreatedLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            myDialog.dismissProgressDialog()
+            myDialog.showErrorAlertDialog(it)
+
+        })
+
+        mainViewModel.pinCreatedLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            sharedPref.setUserDataModel(userData.apply {
+                this.pin = it.pin
+            })
+
+            sharedPref.setPin()
+
+            Toast.makeText(requireContext(), "Pin Created", Toast.LENGTH_SHORT).show()
+
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_pinFragment_to_nav_gallery)
+
+            myDialog.dismissProgressDialog()
+
+        })
 
        // Toast.makeText(requireContext(), "$userData", Toast.LENGTH_SHORT).show()
 
@@ -72,16 +105,17 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
                     }else{
 
                         if (pin == confirmPin){
-                            mainViewModel.updateUser(userData.apply {
+
+                            mainViewModel.updatePIN(userData.apply {
                                 this.pin = pin
                             })
-                            sharedPref.setUserData(userData.apply {
+
+                     /*       mainViewModel.updateUser(userData.apply {
                                 this.pin = pin
-                            })
-                            sharedPref.setPin()
-                            Toast.makeText(requireContext(), "Pin Created", Toast.LENGTH_SHORT).show()
-                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                                .navigate(R.id.action_pinFragment_to_nav_gallery)
+                            })*/
+
+                            myDialog.showProgressDialog("Setting PIN...Please wait",this)
+
                             return@setOnClickListener
                         }else{
                             Toast.makeText(requireContext(), "Pin is not matching", Toast.LENGTH_SHORT).show()

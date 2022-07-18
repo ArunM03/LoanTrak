@@ -5,13 +5,16 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import com.loantrackingsystem.app.data.LoanData
+import com.loantrackingsystem.app.data.LoanDataModel
 import com.loantrackingsystem.app.data.UserData
+import com.loantrackingsystem.app.data.UserDataModel
 import pub.devrel.easypermissions.EasyPermissions
 
 object Constants {
 
 
     var userData = UserData()
+    var userDataModel = UserDataModel()
 
     var isLanguageChanged = false
 
@@ -23,7 +26,7 @@ object Constants {
     var isSetPin = false
 
 
-    var loanData = LoanData()
+    var loanData = LoanDataModel()
 
 
 
