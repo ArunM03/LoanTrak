@@ -45,7 +45,7 @@ import com.loantrackingsystem.app.room.MainViewModelFactory
 import okhttp3.internal.notifyAll
 
 
-class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
+class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fragment_dashboard) {
 
 
     lateinit var binding : FragmentDashboardBinding
@@ -92,7 +92,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.rvLoans.adapter = loanHistoryAdapter
         binding.rvLoans.layoutManager = LinearLayoutManager(requireContext())
 
-        mainViewModel.getLoans(sharedPref.getUserDataModel().userId)
+        mainViewModel.getLoans(sharedPref.getUserDataModel().userId,type)
 
         mainViewModel.getLoansLive.observe(viewLifecycleOwner, Observer {
 

@@ -126,8 +126,11 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
                 }
                 if(pin == userData.pin){
 
-                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                            .navigate(R.id.action_pinFragment_to_nav_gallery)
+                /*        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                            .navigate(R.id.action_pinFragment_to_nav_gallery)*/
+
+                           Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                            .navigate(R.id.action_pinFragment_to_tabViewFragment)
 
                 }else{
                     Toast.makeText(requireContext(),getString(R.string.incorrectpin), Toast.LENGTH_SHORT).show()

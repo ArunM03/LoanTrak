@@ -64,7 +64,7 @@ class LoanHistoryFragment : Fragment(R.layout.fragment_loanhistory) {
 
         }
 
-        mainViewModel.getLoans(sharedPref.getUserDataModel().userId)
+        mainViewModel.getLoans(sharedPref.getUserDataModel().userId,"Loan Given")
 
         mainViewModel.getLoansLive.observe(viewLifecycleOwner, Observer {
 

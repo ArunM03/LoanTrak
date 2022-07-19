@@ -191,10 +191,10 @@ class FirebaseViewmodel : ViewModel() {
     private var _errorGetLoansLive = MutableLiveData<String>()
     var errorGetLoansLive: LiveData<String> = _errorGetLoansLive
 
-    fun getLoans(userId : String) = viewModelScope.launch(Dispatchers.IO) {
+    fun getLoans(userId : String,type : String) = viewModelScope.launch(Dispatchers.IO) {
 
         try {
-            val loans= usersCollection.document(userId).collection("loans").get().await().toObjects(LoanDataModel::class.java)
+            val loans= usersCollection.document(userId).collection("loans").whereEqualTo("loanType",type).get().await().toObjects(LoanDataModel::class.java)
 
             if(loans.isNotEmpty()){
                 _getLoansLive.postValue(loans)

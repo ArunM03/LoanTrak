@@ -81,8 +81,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                     .navigate(R.id.action_loginFragment_to_nav_home)
             }else{
-                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.action_loginFragment_to_nav_gallery)
+    /*            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_loginFragment_to_nav_gallery)*/
+                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_loginFragment_to_tabViewFragment)
             }
         })
 

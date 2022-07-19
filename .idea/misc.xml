@@ -10,6 +10,7 @@
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_pin.xml" value="0.22" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_register.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_tabview.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_viewloan.xml" value="0.33" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_group.xml" value="0.22" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_loanhistory.xml" value="0.22" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/menu/activity_main_bottomnavigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/menu/activity_main_drawer.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/menu/bottommenu.xml" value="0.33" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/menu/main.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

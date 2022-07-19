@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.loanHistoryFragment
+                R.id.nav_home, R.id.tabViewFragment, R.id.loanHistoryFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -79,9 +79,9 @@ class MainActivity : AppCompatActivity() {
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
                         .navigate(R.id.profileFragment)
                 }
-                if(item.itemId ==   R.id.nav_gallery ){
+                if(item.itemId ==   R.id.tabViewFragment ){
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
-                        .navigate(R.id.nav_gallery)
+                        .navigate(R.id.tabViewFragment)
                 }
                 if(item.itemId ==   R.id.loanHistoryFragment ){
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     hideBottomNavigation()
                     hideToolbar()
                 }
-                R.id.nav_home, R.id.loanHistoryFragment,R.id.nav_gallery  -> {
+                R.id.nav_home, R.id.loanHistoryFragment,R.id.tabViewFragment,R.id.nav_gallery  -> {
                     hideToolbar()
                     showBottomNavigation()
                 }

@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_loginFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_tabViewFragment"
+            app:destination="@id/tabViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -63,6 +66,9 @@
             app:destination="@id/pinFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/pinFragment"/>
+        <action
+            android:id="@+id/action_registerFragment_to_tabViewFragment"
+            app:destination="@id/tabViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/pinFragment"
@@ -76,6 +82,9 @@
         <action
             android:id="@+id/action_pinFragment_to_nav_gallery"
             app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_pinFragment_to_tabViewFragment"
+            app:destination="@id/tabViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLoanFragment"
@@ -126,5 +135,9 @@
         android:id="@+id/profileFragment"
         android:name="com.loantrackingsystem.app.ui.home.ProfileFragment"
         android:label="Groups" />
+    <fragment
+        android:id="@+id/tabViewFragment"
+        android:name="com.loantrackingsystem.app.ui.dashboard.TabViewFragment"
+        android:label="TabViewFragment" />
 
 </navigation>

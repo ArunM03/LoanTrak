@@ -157,10 +157,13 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
             it?.let {
 
-                val amount = binding.edAmount.text.toString()
-                if(amount.isNotEmpty()){
-                    val emi = amount.toInt() * (it.toString().toFloat()/100)
-                    binding.edEmi.setText(emi.toString())
+                if(it.isNotEmpty()){
+                        val amount = binding.edAmount.text.toString()
+                      if(amount.isNotEmpty()){
+                        val emi = amount.toInt() * (it.toString().toFloat()/100)
+                         binding.edEmi.setText(emi.toString())
+                        }
+
                 }
 
             }
