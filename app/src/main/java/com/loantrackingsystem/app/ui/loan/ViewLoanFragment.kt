@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -47,6 +48,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
     lateinit var myDialog: MyDialog
     var isEnabled = false
     val loanReason = listOf("Car Loan","Hand Loan","Personal Loan","Education Loan","Home renovation Loan","Other")
+    val loanType = listOf("Loan Given","Loan Taken")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,6 +77,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
 
         setSpinner(binding.edDescription, loanReason,true)
+        setSpinner(binding.edLoanType, loanType)
 
         val activity = activity as MainActivity
         delete = activity.findViewById<ImageButton>(R.id.ib_delete)
@@ -89,10 +92,12 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         edit.setOnClickListener {
             if(isEnabled){
                 isEnabled = false
+                setNonEditableColor()
                 edit.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
                 binding.parentConstraint.deepForEach { isEnabled = false }
             }else   {
                 isEnabled = true
+                setEditableColor()
                 edit.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_200))
                 binding.parentConstraint.deepForEach { isEnabled = true }
             }
@@ -111,6 +116,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             val emi = binding.edEmi.text.toString()
             val description = binding.edDescription.selectedItem.toString()
             val otherreason = binding.edOthereasons.text.toString()
+            val loanType = binding.edLoanType.selectedItem.toString()
 
             val status = if (binding.rbPaid.isChecked){
                 Constants.PAID
@@ -131,8 +137,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                 }
 
 
-                mainViewModel.addLoan(LoanDataModel(name,phone, amount,reason,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid, Constants.loanData.loanID),Constants.loanData.userid)
-
+                mainViewModel.addLoan(LoanDataModel(name,phone, amount,reason,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid,loanType, Constants.loanData.loanID),Constants.loanData.userid)
 
 
                 if(isNew){
@@ -145,6 +150,20 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                 Toast.makeText(requireContext(), getString(R.string.pleaseenteralldetails), Toast.LENGTH_SHORT).show()
             }
 
+
+        }
+
+        binding.edInterest.doAfterTextChanged {
+
+            it?.let {
+
+                val amount = binding.edAmount.text.toString()
+                if(amount.isNotEmpty()){
+                    val emi = amount.toInt() * (it.toString().toFloat()/100)
+                    binding.edEmi.setText(emi.toString())
+                }
+
+            }
 
         }
 
@@ -218,6 +237,20 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
 
     }
+
+    fun setEditableColor(){
+        binding.edAmount.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
+        binding.edInterest.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
+        binding.tvDateValue.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
+        binding.edEmi.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
+    }
+    fun setNonEditableColor(){
+        binding.edAmount.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.grey_100))
+        binding.edInterest.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.grey_100))
+        binding.tvDateValue.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.grey_100))
+        binding.edEmi.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.grey_100))
+    }
+
 
     fun getNames(loanPersonData: List<LoanPersonData>) : MutableList<String>{
 
@@ -318,6 +351,10 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         }
         binding.edInterest.setText(data.interest.toString())
         binding.edEmi.setText(data.emi.toString())
+
+        if(data.loanType.isNotEmpty()){
+            binding.edDescription.setSelection(loanType.indexOf(data.loanType))
+        }
 
 
 

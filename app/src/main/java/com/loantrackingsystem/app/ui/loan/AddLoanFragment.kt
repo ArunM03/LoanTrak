@@ -96,6 +96,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                 val emi = binding.edEmi.text.toString()
                 val description = binding.edDescription.selectedItem.toString()
                 val otherreason = binding.edOthereasons.text.toString()
+                val loanType = binding.edLoanType.selectedItem.toString()
 
                 val status = Constants.NOT_PAID
 
@@ -132,6 +133,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                         binding.edMonths.selectedItem.toString(),
                         binding.edYrs.selectedItem.toString(),
                         userId,
+                        loanType,
                         loanId
                     )
 
@@ -189,6 +191,8 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         setSpinner(binding.edMonths, listOf("0","1","2","3","4","5","6","7","8","9","10","11"))
         setSpinner(binding.edYrs, listOf("0","1","2","3","4","5","6","7","8","9","10"))
+
+        setSpinner(binding.edLoanType, listOf("Loan Given","Loan Taken"))
 
         setSpinner(binding.edDescription, listOf("Select Reason","Car Loan","Hand Loan","Personal Loan","Education Loan","Home renovation Loan","Other"),isReason = true)
 
@@ -342,7 +346,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
                 if(isName){
                     val loanPersonData  = loanPersonsData.filter { it.name == spinner.selectedItem.toString() }
-                    Toast.makeText(requireContext(), "${spinner.selectedItem.toString()} and ${loanPersonData}", Toast.LENGTH_SHORT).show()
+               //     Toast.makeText(requireContext(), "${spinner.selectedItem.toString()} and ${loanPersonData}", Toast.LENGTH_SHORT).show()
                     if(loanPersonData.isNotEmpty()){
                         binding.edPhonenumber.text = loanPersonData[0].phone
                         number = loanPersonData[0].phone

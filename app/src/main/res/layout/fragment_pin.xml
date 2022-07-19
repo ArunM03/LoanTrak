@@ -40,7 +40,7 @@
             android:fontFamily="@font/inter_regular"
             android:hint="@string/enter_pinorpassword"
             android:padding="16dp"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:gravity="start"
             android:maxLength="4"
             android:textColor="@color/black" />
@@ -68,7 +68,7 @@
             android:fontFamily="@font/inter_regular"
             android:hint="@string/confirm_pin"
             android:padding="16dp"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="4"
             android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>

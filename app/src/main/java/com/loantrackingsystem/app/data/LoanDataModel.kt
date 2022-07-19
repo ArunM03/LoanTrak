@@ -14,5 +14,6 @@ data class LoanDataModel(
     var months : String = "",
     var years : String = "",
     var userid : String = "",
+    var loanType : String = "",
     var loanID : String = ""
 )
