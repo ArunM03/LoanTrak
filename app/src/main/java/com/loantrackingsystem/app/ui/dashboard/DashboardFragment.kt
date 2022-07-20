@@ -77,7 +77,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
         binding.cdAddloan.setOnClickListener {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_nav_gallery_to_addLoanFragment)
+                .navigate(R.id.action_tabViewFragment_to_addLoanFragment)
 
         }
 
@@ -186,7 +186,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         loanHistoryAdapter.setOnItemClickListener {
             Constants.loanData = it
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_nav_gallery_to_viewLoanFragment)
+                .navigate(R.id.action_tabViewFragment_to_viewLoanFragment)
         }
 
 

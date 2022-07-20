@@ -77,7 +77,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
 
         setSpinner(binding.edDescription, loanReason,true)
-        setSpinner(binding.edLoanType, loanType)
+       // setSpinner(binding.edLoanType, loanType)
 
         val activity = activity as MainActivity
         delete = activity.findViewById<ImageButton>(R.id.ib_delete)
@@ -116,7 +116,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             val emi = binding.edEmi.text.toString()
             val description = binding.edDescription.selectedItem.toString()
             val otherreason = binding.edOthereasons.text.toString()
-            val loanType = binding.edLoanType.selectedItem.toString()
+            val loanType = binding.tvLoanType.text.toString()
 
             val status = if (binding.rbPaid.isChecked){
                 Constants.PAID
@@ -356,7 +356,8 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         binding.edEmi.setText(data.emi.toString())
 
         if(data.loanType.isNotEmpty()){
-            binding.edDescription.setSelection(loanType.indexOf(data.loanType))
+            binding.tvLoanvalue.text = data.loanType
+         //   binding.edDescription.setSelection(loanType.indexOf(data.loanType))
         }
 
 

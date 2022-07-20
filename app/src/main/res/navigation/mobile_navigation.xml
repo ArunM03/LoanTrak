@@ -138,6 +138,13 @@
     <fragment
         android:id="@+id/tabViewFragment"
         android:name="com.loantrackingsystem.app.ui.dashboard.TabViewFragment"
-        android:label="TabViewFragment" />
+        android:label="TabViewFragment" >
+        <action
+            android:id="@+id/action_tabViewFragment_to_viewLoanFragment"
+            app:destination="@id/viewLoanFragment" />
+        <action
+            android:id="@+id/action_tabViewFragment_to_addLoanFragment"
+            app:destination="@id/addLoanFragment" />
+    </fragment>
 
 </navigation>
