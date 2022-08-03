@@ -116,7 +116,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             val emi = binding.edEmi.text.toString()
             val description = binding.edDescription.selectedItem.toString()
             val otherreason = binding.edOthereasons.text.toString()
-            val loanType = binding.tvLoanType.text.toString()
+            val loanType = binding.tvLoanvalue.text.toString()
 
             val status = if (binding.rbPaid.isChecked){
                 Constants.PAID
@@ -137,7 +137,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                 }
 
 
-                mainViewModel.addLoan(LoanDataModel(name,phone, amount,reason,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid,loanType, Constants.loanData.loanID),Constants.loanData.userid)
+                mainViewModel.addLoan(LoanDataModel(name,phone, amount,reason,date,endDate,emi.toFloat(),interest.toFloat(), status,Constants.loanData.months,Constants.loanData.years,Constants.loanData.userid,loanType,Constants.loanData.username,Constants.loanData.loanGiverPhone,Constants.loanData.usersPhone, Constants.loanData.loanID))
 
 
                 if(isNew){
@@ -149,7 +149,6 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             }else{
                 Toast.makeText(requireContext(), getString(R.string.pleaseenteralldetails), Toast.LENGTH_SHORT).show()
             }
-
 
         }
 
@@ -338,15 +337,17 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         binding.edAmount.setText(data.amount.toString())
         binding.edPhonenumber.text = data.phone
-        if(loanReason.contains(data.description)){
+        if(!loanReason.contains(data.description)){
             binding.edDescription.setSelection(5)
-        }else{
             binding.edOthereasons.visibility = View.VISIBLE
             binding.edOthereasons.setText(data.description)
+        }else{
+            binding.edOthereasons.visibility = View.GONE
+            binding.edDescription.setSelection(loanReason.indexOf(data.description))
         }
 
-
         binding.tvDateValue.text = getDate(data.date.toLong())
+
         if(data.endDate == "0L"){
             binding.tvEnddateValue.text = getString(R.string.selectdate)
         }else{

@@ -42,6 +42,8 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
     var date = ""
     var number = ""
     var userId = ""
+    var username = ""
+    var userphno = ""
     var endDate = "0L"
     var isNew = false
     lateinit var loanPersons : MutableList<String>
@@ -59,6 +61,8 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         val userData = sharedPref.getUserDataModel()
         userId = userData.userId
+        username = userData.firstName
+        userphno = userData.phoneNumber
 
 
 
@@ -120,24 +124,49 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                         description
                     }
 
-                    val loanData =  LoanDataModel(
-                        name,
-                        phone,
-                        amount,
-                        reason,
-                        date,
-                        endDate,
-                        emi.toFloat(),
-                        interest.toFloat(),
-                        status,
-                        binding.edMonths.selectedItem.toString(),
-                        binding.edYrs.selectedItem.toString(),
-                        userId,
-                        loanType,
-                        loanId
-                    )
+                    val loanData = if(loanType == "Loan Given") {
+                        LoanDataModel(
+                            name,
+                            phone,
+                            amount,
+                            reason,
+                            date,
+                            endDate,
+                            emi.toFloat(),
+                            interest.toFloat(),
+                            status,
+                            binding.edMonths.selectedItem.toString(),
+                            binding.edYrs.selectedItem.toString(),
+                            userId,
+                            loanType,
+                            username,
+                            userphno,
+                            listOf<String>(userphno,phone),
+                            loanId
+                        )
+                    }else {
+                        LoanDataModel(
+                            username,
+                            userphno,
+                            amount,
+                            reason,
+                            date,
+                            endDate,
+                            emi.toFloat(),
+                            interest.toFloat(),
+                            status,
+                            binding.edMonths.selectedItem.toString(),
+                            binding.edYrs.selectedItem.toString(),
+                            userId,
+                            loanType,
+                            name,
+                            phone,
+                            listOf<String>(userphno,phone),
+                            loanId
+                        )
+                    }
 
-                    mainViewModel.addLoan(loanData,userId)
+                    mainViewModel.addLoan(loanData)
 
             /*        mainViewModel.addLoan(
                         LoanData(
@@ -387,8 +416,10 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
                     binding.edName.setSelection(index)
 
-                    number = num
-                    binding.edPhonenumber.setText(num)
+                    val number2 = num.replace(" ","").takeLast(10)
+
+                    number = number2
+                    binding.edPhonenumber.setText(number2)
 
 
                    // sendSMS(number)
@@ -433,7 +464,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
           //  val sms: SmsManager = SmsManager.getDefault()
             val sms: SmsManager = SmsManager.getDefault()
            // sms.sendTextMessage(number2, null, "$name invited you to Loan Tracking App. Please install this app using the following link https://play.google.com/store/apps/details?id=com.loantrackingsystem.app", pi, null)
-            sms.sendTextMessage(number2, null, "$userId invited you to Loan Tracking App. https://play.google.com/store/apps/details?id=com.loantrackingsystem.app", null, null)
+            sms.sendTextMessage(number2, null, "$username invited you to Loan Tracking App. https://play.google.com/store/apps/details?id=com.loantrackingsystem.app", null, null)
 
    /*     }catch (e:Exception){
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()

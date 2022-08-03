@@ -13,7 +13,7 @@ import com.loantrackingsystem.app.databinding.RvLoanhistoryBinding
 import com.loantrackingsystem.app.other.Constants
 import java.text.SimpleDateFormat
 
-class LoanHistoryAdapter(val isPending : Boolean = false)  : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryViewHolder>()  {
+class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = "")  : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryViewHolder>()  {
 
     class LoanHistoryViewHolder(val binding : RvLoanhistoryBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -67,8 +67,17 @@ class LoanHistoryAdapter(val isPending : Boolean = false)  : RecyclerView.Adapte
             with(holder) {
 
                 binding.tvAmount.text = "₹${data.amount}"
-                binding.tvName.text = data.name
                 binding.tvStatus.text = data.status
+
+                if(phone == data.phone){
+
+                    binding.tvName.text = data.username
+
+                }else{
+
+                    binding.tvName.text = data.name
+
+                }
 
                 if(isPending){
                     binding.tvStatus.visibility = View.GONE

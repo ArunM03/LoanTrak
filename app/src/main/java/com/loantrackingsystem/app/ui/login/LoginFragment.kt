@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
+import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DimenRes
@@ -70,6 +71,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         myDialog = MyDialog(requireContext())
 
+       // binding.edUsername.filters = arrayOf<InputFilter>(InputFilter.AllCaps())
+
         mainViewModel.userLoginLive.observe(viewLifecycleOwner, Observer {
 
             myDialog.dismissProgressDialog()
@@ -115,7 +118,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 //    val users2 = users1.filter { it.password  == password}
                    // if(users2.isNotEmpty()){
 
-                mainViewModel.loginUser(userName, password)
+                mainViewModel.loginUser(userName.uppercase(), password)
 
                 myDialog.showProgressDialog("Loging In..Please wait",this)
 

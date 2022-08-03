@@ -9,5 +9,8 @@ data class UserDataModel(
     var userId : String = "",
     var username : String = "",
     var password : String = "",
-    var pin : String = ""
+    var pin : String = "",
+    var phoneNumber : String = "",
+    var firstName : String = "",
+    var secondName : String = ""
 )

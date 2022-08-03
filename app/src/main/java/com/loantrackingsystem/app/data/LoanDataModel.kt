@@ -15,5 +15,15 @@ data class LoanDataModel(
     var years : String = "",
     var userid : String = "",
     var loanType : String = "",
-    var loanID : String = ""
+    var username : String = "",
+    var loanGiverPhone : String = "",
+    var usersPhone : List<String>  = listOf(),
+    var loanID : String = "",
+    var emiData : List<LoanEmiData> = listOf()
+)
+data class LoanEmiData(
+    var index : Int = 0,
+    val date : String = "",
+    val status : String = "",
+    val amount : String = ""
 )

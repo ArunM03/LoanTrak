@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/about_us"
-        android:orderInCategory="100"
         android:title="About us"
-        android:icon="@drawable/ic_action_aboutus"
-        app:showAsAction="withText" />
-    <item
+        android:icon="@drawable/ic_action_aboutus"/>
+<!--    <item
         android:id="@+id/set_pin"
         android:orderInCategory="100"
         android:title="Set Pin"
-        app:showAsAction="withText" />
+        app:showAsAction="withText" />-->
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_menu_gallery" />
+
+    <item
+        android:id="@+id/action_profilt"
+        android:title="My Profile"
+        android:icon="@drawable/ic_action_profile" />
 
     <item
         android:id="@+id/action_inviteus"
-        android:orderInCategory="100"
         android:title="@string/menu_inviteus"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_shareus"/>
 
     <item
         android:id="@+id/action_logout"
-        android:orderInCategory="100"
         android:title="@string/menu_logout"
-        app:showAsAction="never" />
-
+        android:icon="@drawable/ic_action_logout"/>
 
 
 </menu>

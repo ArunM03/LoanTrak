@@ -1,6 +1,7 @@
 package com.loantrackingsystem.app.ui.login
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -53,6 +54,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
         myDialog = MyDialog(requireContext())
 
+       // binding.edUsername.filters = arrayOf<InputFilter>(InputFilter.AllCaps())
+
         mainViewModel.userCreatedLive.observe(viewLifecycleOwner, Observer {
 
             myDialog.dismissProgressDialog()
@@ -87,10 +90,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val userName = binding.edUsername.text.toString()
             val password = binding.edPassword.text.toString()
             val confirmPassword = binding.edConfirmpassword.text.toString()
+            val phoneNumber = binding.edPhonenumber.text.toString()
             val pin = "null"//binding.edPin.text.toString()
+            val firstName = binding.edFirstname.text.toString()
+            val secondName = binding.edSecondame.text.toString()
             val ConfirmPin = "null"//binding.edConfirmpin.text.toString()
 
-            if(userName.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()){
+            if(userName.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && phoneNumber.isNotEmpty() && firstName.isNotEmpty() && secondName.isNotEmpty()){
 
                // val users1 = allUsers.filter { it.username == userName }
              //   if(users1.isEmpty()){
@@ -103,13 +109,12 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
                         val userId = UUID.randomUUID().toString().substring(0,15)
 
-                        mainViewModel.createUser(UserDataModel(userId,userName,password,pin))
+                        mainViewModel.createUser(UserDataModel(userId,userName.uppercase(),password,pin,phoneNumber,firstName, secondName))
 
                         myDialog.showProgressDialog("Registering...Please wait",this)
 
                    /*     }else{
                             Toast.makeText(requireContext(), getString(R.string.pinnotmatching), Toast.LENGTH_SHORT).show()
-
                         }*/
 
                     }else{

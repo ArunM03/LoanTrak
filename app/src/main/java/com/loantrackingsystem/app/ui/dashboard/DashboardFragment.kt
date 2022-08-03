@@ -73,7 +73,9 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
         sharedPref = SharedPref(requireContext())
 
-        loanHistoryAdapter = LoanHistoryAdapter(true)
+        val userData = sharedPref.getUserDataModel()
+
+        loanHistoryAdapter = LoanHistoryAdapter(true,userData.phoneNumber)
 
         binding.cdAddloan.setOnClickListener {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
@@ -92,7 +94,9 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         binding.rvLoans.adapter = loanHistoryAdapter
         binding.rvLoans.layoutManager = LinearLayoutManager(requireContext())
 
-        mainViewModel.getLoans(sharedPref.getUserDataModel().userId,type)
+
+
+        mainViewModel.getLoans(userData.userId,type,userData.phoneNumber)
 
         mainViewModel.getLoansLive.observe(viewLifecycleOwner, Observer {
 
@@ -186,7 +190,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         loanHistoryAdapter.setOnItemClickListener {
             Constants.loanData = it
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_tabViewFragment_to_viewLoanFragment)
+                .navigate(R.id.action_tabViewFragment_to_loanDetailsFragment)
         }
 
 

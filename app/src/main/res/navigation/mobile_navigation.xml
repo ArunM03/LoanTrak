@@ -145,6 +145,17 @@
         <action
             android:id="@+id/action_tabViewFragment_to_addLoanFragment"
             app:destination="@id/addLoanFragment" />
+        <action
+            android:id="@+id/action_tabViewFragment_to_loanDetailsFragment"
+            app:destination="@id/loanDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.loantrackingsystem.app.ui.home.UserProfileFragment"
+        android:label="My Profile" />
+    <fragment
+        android:id="@+id/loanDetailsFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.LoanDetailsFragment"
+        android:label="Loan Details" />
 
 </navigation>

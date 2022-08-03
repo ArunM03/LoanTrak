@@ -21,6 +21,9 @@ object Constants {
     val PAID = "PAID"
     val NOT_PAID = "NOT PAID"
 
+    val LOANGIVEN = "Loan Given"
+    val LOANTAKEN = "Loan Taken"
+
     var isFirstTime = false
 
     var isSetPin = false

@@ -38,6 +38,8 @@
             android:fontFamily="@font/inter_regular"
             android:hint="@string/username"
             android:padding="16dp"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@_"
+            android:inputType="textFilter"
             android:textColor="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
