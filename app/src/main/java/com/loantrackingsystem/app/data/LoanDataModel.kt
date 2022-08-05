@@ -24,6 +24,6 @@ data class LoanDataModel(
 data class LoanEmiData(
     var index : Int = 0,
     val date : String = "",
-    val status : String = "",
-    val amount : String = ""
+    var status : String = "",
+    var amount : String = ""
 )

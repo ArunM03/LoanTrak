@@ -277,11 +277,12 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
         binding.edInterest.doAfterTextChanged {
 
             it?.let {
-
-                val amount = binding.edAmount.text.toString()
-                if(amount.isNotEmpty()){
-                    val emi = amount.toInt() * (it.toString().toFloat()/100)
-                    binding.edEmi.setText(emi.toString())
+                if(binding.edInterest.hasFocus()){
+                    val amount = binding.edAmount.text.toString()
+                    if(amount.isNotEmpty()){
+                        val emi = amount.toInt() * (it.toString().toFloat()/100)
+                        binding.edEmi.setText(emi.toString())
+                    }
                 }
 
             }
@@ -289,9 +290,23 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
         }
 
 
+        binding.edEmi.doAfterTextChanged {
+
+            it?.let {
+                if(binding.edEmi.hasFocus()){
+                    val amount = binding.edAmount.text.toString()
+                    if(amount.isNotEmpty()){
+                        val emi = ((it.toString().toFloat()) / amount.toInt()) * 100
+                        binding.edInterest.setText(emi.toString())
+                    }
+
+                }
+            }
+
+        }
+
+
     }
-
-
 
     fun showDatePickerDialog(isEndDate : Boolean = false){
 

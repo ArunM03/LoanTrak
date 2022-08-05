@@ -4,10 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import com.loantrackingsystem.app.data.LoanData
-import com.loantrackingsystem.app.data.LoanDataModel
-import com.loantrackingsystem.app.data.UserData
-import com.loantrackingsystem.app.data.UserDataModel
+import com.loantrackingsystem.app.data.*
 import pub.devrel.easypermissions.EasyPermissions
 
 object Constants {
@@ -30,6 +27,8 @@ object Constants {
 
 
     var loanData = LoanDataModel()
+
+    var curLoanEMIDate = LoanEmiData()
 
 
 

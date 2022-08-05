@@ -190,7 +190,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         loanHistoryAdapter.setOnItemClickListener {
             Constants.loanData = it
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_tabViewFragment_to_loanDetailsFragment)
+                .navigate(R.id.action_tabViewFragment_to_viewLoanFragment)
         }
 
 

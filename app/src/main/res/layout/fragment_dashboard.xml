@@ -98,7 +98,6 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintTop_toTopOf="@id/tv_totalloanamounttext"
                 app:layout_constraintBottom_toBottomOf="@id/tv_totalloanamounttext"
-                android:text="Show/Hide"
                 android:id="@+id/switch_hideshow"/>
 
 
@@ -158,6 +157,7 @@
                 android:gravity="center"
                 android:text="@string/total_loans"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:layout_marginEnd="16dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -173,6 +173,7 @@
                 android:gravity="center"
                 tools:text="05"
                 android:textColor="@color/blue"
+                android:visibility="gone"
                 android:layout_marginEnd="16dp"
                 android:textStyle="bold"
                 android:textSize="20sp"

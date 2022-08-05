@@ -15,15 +15,15 @@ import androidx.core.view.forEach
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.loantrackingsystem.adapter.EmiCalendarAdapter
 import com.loantrackingsystem.adapter.LoanHistoryAdapter
 import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.R
-import com.loantrackingsystem.app.data.LoanData
-import com.loantrackingsystem.app.data.LoanDataModel
-import com.loantrackingsystem.app.data.LoanPersonData
-import com.loantrackingsystem.app.data.LoanPersonDataModel
+import com.loantrackingsystem.app.data.*
 import com.loantrackingsystem.app.databinding.FragmentLoanhistoryBinding
 import com.loantrackingsystem.app.databinding.FragmentViewloanBinding
 import com.loantrackingsystem.app.firebase.FirebaseViewmodel
@@ -44,6 +44,8 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
     lateinit var edit : ImageButton
     var endDate = "0L"
     var isNew = false
+    lateinit var emiCalendar: EmiCalendarAdapter
+    lateinit var transactions: EmiCalendarAdapter
     lateinit var loanPersons : MutableList<String>
     lateinit var myDialog: MyDialog
     var isEnabled = false
@@ -74,7 +76,13 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         binding.parentConstraint.deepForEach { isEnabled = false }
 
+        setPaymentCalendar()
+        setTransactions()
+
         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
+
+        binding.rvEmis.isNestedScrollingEnabled = false
+        binding.rvTransactions.isNestedScrollingEnabled = false
 
         setSpinner(binding.edDescription, loanReason,true)
        // setSpinner(binding.edLoanType, loanType)
@@ -169,7 +177,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         }
 
-        binding.cdDate.setOnClickListener {
+        binding.tvDateValue.setOnClickListener {
 
             showDatePickerDialog()
         }
@@ -240,6 +248,42 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
     }
 
+    fun setPaymentCalendar(){
+
+        emiCalendar = EmiCalendarAdapter()
+
+        binding.rvEmis.adapter = emiCalendar
+        binding.rvEmis.layoutManager = LinearLayoutManager(requireContext())
+
+
+        emiCalendar.emiCalendarList = getEMICalendar()
+
+        emiCalendar.setOnItemClickListener {
+            Constants.curLoanEMIDate = it
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
+        }
+
+    }
+
+    fun setTransactions(){
+
+        transactions = EmiCalendarAdapter()
+
+        binding.rvTransactions.adapter = transactions
+        binding.rvTransactions.layoutManager = LinearLayoutManager(requireContext())
+
+        transactions.emiCalendarList = Constants.loanData.emiData
+
+        transactions.setOnItemClickListener {
+            Constants.curLoanEMIDate = it
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
+        }
+
+    }
+
+
     fun setEditableColor(){
         binding.edAmount.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
         binding.edInterest.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_100))
@@ -253,6 +297,54 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         binding.edEmi.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.grey_100))
     }
 
+    fun getEMICalendar() : List<LoanEmiData>{
+
+        val emiCalendarList = mutableListOf<LoanEmiData>()
+
+        val paidList = Constants.loanData.emiData.sortedBy { it.index }
+
+        val calendar = Calendar.getInstance().apply {
+            this.timeInMillis = Constants.loanData.date.toLong()
+        }
+
+        var month = calendar.get(Calendar.MONTH)
+        var year = calendar.get(Calendar.YEAR)
+
+
+        var emiAmount = Constants.loanData.emi
+
+        val countDues = getNumberOfDues()
+
+        for(emi in 1..countDues){
+
+            month += 1
+
+            if(month >= 13){
+                month = 1
+                year += 1
+            }
+
+            if(paidList.size >= emi){
+                emiCalendarList.add(paidList[emi-1])
+            }else{
+                emiCalendarList.add(LoanEmiData(emi-1,"01/$month/$year",Constants.NOT_PAID,emiAmount.toString()))
+            }
+
+        }
+
+        return emiCalendarList
+
+    }
+
+    private fun getNumberOfDues(): Int {
+
+        val years = Constants.loanData.years.toInt()
+        val months = Constants.loanData.months.toInt()
+
+        val total = (years * 12 ) + months
+
+        return total
+    }
 
     fun getNames(loanPersonData: List<LoanPersonData>) : MutableList<String>{
 

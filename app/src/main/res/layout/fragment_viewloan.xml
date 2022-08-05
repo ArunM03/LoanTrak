@@ -6,7 +6,7 @@
     android:id="@+id/parent_constraint"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -15,6 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="24dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ct_viewloandetails"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.35" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -30,28 +43,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_username"
+            <TextView
+                android:id="@+id/ed_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
                 android:layout_marginEnd="16dp"
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_name">
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_name"
+                tools:text="Arun" />
 
-                <TextView
-                    android:id="@+id/ed_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:hint="@string/username"
-                    android:padding="8dp"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_nameborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ed_name"/>
 
 
             <ImageView
@@ -64,8 +77,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 android:layout_marginTop="16dp"
-                app:layout_constraintStart_toEndOf="@id/cd_username"
-                app:layout_constraintBottom_toBottomOf="@id/cd_username"
+                app:layout_constraintStart_toEndOf="@id/ed_name"
+                app:layout_constraintBottom_toBottomOf="@id/ed_name"
                 android:id="@+id/ib_contact"/>
 
             <TextView
@@ -80,30 +93,33 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_username" />
+                app:layout_constraintTop_toBottomOf="@id/tv_nameborder" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_phonenumber"
+            <TextView
+                android:id="@+id/ed_phonenumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_phonenumber"
-                app:layout_constraintTop_toBottomOf="@id/tv_phonenumber">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_phonenumber"
+                app:layout_constraintBottom_toBottomOf="@id/tv_phonenumber"
+                tools:text="9940824159" />
 
-                <TextView
-                    android:id="@+id/ed_phonenumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/phone_number"
-                    android:padding="8dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_phoneborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ed_phonenumber"/>
+
+
 
             <TextView
                 android:id="@+id/tv_amount"
@@ -117,30 +133,37 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_phonenumber" />
+                app:layout_constraintTop_toBottomOf="@id/tv_phoneborder" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_amount"
+
+            <EditText
+                android:id="@+id/ed_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/tv_amount">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:hint="@string/enter_amount"
+                android:inputType="numberDecimal"
+                android:maxLength="12"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_amount" />
 
-                <EditText
-                    android:id="@+id/ed_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/enter_amount"
-                    android:padding="8dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_amountborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ed_amount"/>
+
+
 
             <TextView
                 android:id="@+id/tv_description"
@@ -154,36 +177,48 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_amount" />
+                app:layout_constraintTop_toBottomOf="@id/tv_amountborder" />
 
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/ed_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/grey_100"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/tv_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_description" />
 
             <EditText
                 android:id="@+id/ed_othereasons"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
                 android:background="@color/grey_100"
                 android:fontFamily="@font/inter_regular"
                 android:hint="Enter reason"
-                android:layout_marginTop="6dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/ed_description"
-                android:textColor="@color/black" />
+                app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/ed_description"
-                    android:background="@color/grey_100"
-                    android:hint="@string/username"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@id/tv_amount"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description"
-                    android:textColor="@color/black" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_reasonborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+
 
 
 
@@ -199,31 +234,30 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ed_othereasons" />
+                app:layout_constraintTop_toBottomOf="@id/tv_reasonborder" />
 
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_date"
+            <TextView
+                android:id="@+id/tv_dateValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/tv_date">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_date"
+                tools:text="12, June 2022" />
 
-                <TextView
-                    android:id="@+id/tv_dateValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:padding="8dp"
-                    tools:text="12, June 2022"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_startdateborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"/>
 
 
 
@@ -240,7 +274,7 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_date" />
+                app:layout_constraintTop_toBottomOf="@id/tv_startdateborder" />
 
 
             <com.google.android.material.card.MaterialCardView
@@ -281,28 +315,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cd_enddate" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_interest"
+
+            <EditText
+                android:id="@+id/ed_interest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/tv_interest">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:hint="@string/enter_interest"
+                android:inputType="numberDecimal"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_interest" />
 
-                <EditText
-                    android:id="@+id/ed_interest"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/enter_interest"
-                    android:padding="8dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_interestborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_interest"/>
+
 
 
             <TextView
@@ -317,30 +354,32 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_interest" />
+                app:layout_constraintTop_toBottomOf="@id/tv_interestborder" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_emi"
+
+            <EditText
+                android:id="@+id/ed_emi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/tv_emi">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:hint="@string/enter_emi"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_emi" />
 
-                <EditText
-                    android:id="@+id/ed_emi"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:hint="@string/enter_emi"
-                    android:padding="8dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_monthlyamountborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_emi"/>
 
 
             <com.google.android.material.card.MaterialCardView
@@ -353,7 +392,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rg_status"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.35000002"
                 app:layout_constraintWidth_percent="0.8">
 
@@ -363,7 +401,7 @@
                     android:background="@color/blue"
                     android:fontFamily="@font/inter_bold"
                     android:gravity="center"
-                    android:padding="16dp"
+                    android:padding="8dp"
                     android:text="@string/save"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
@@ -381,37 +419,36 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_emi" />
+                app:layout_constraintTop_toBottomOf="@id/tv_monthlyamountborder" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cd_loantype"
+
+            <TextView
+                android:id="@+id/tv_loanvalue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintStart_toStartOf="@id/tv_amount"
-                app:layout_constraintTop_toBottomOf="@id/tv_loanType">
+                android:background="@color/grey_100"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_loanType"
+                tools:text="12, June 2022" />
 
-                <TextView
-                    android:id="@+id/tv_loanvalue"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/grey_100"
-                    android:fontFamily="@font/inter_regular"
-                    android:padding="8dp"
-                    tools:text="12, June 2022"
-                    android:textColor="@color/black" />
-            </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_loanvalueborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_loanvalue"/>
 
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
                 android:text="@string/status"
@@ -419,17 +456,17 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cd_loantype" />
+                app:layout_constraintBottom_toBottomOf="@id/rg_status"
+                app:layout_constraintTop_toBottomOf="@id/tv_loanvalueborder" />
 
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/tv_status"
-                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="@id/tv_loanvalueborder"
                 android:id="@+id/rg_status"
-                app:layout_constraintStart_toStartOf="@id/tv_status">
+                app:layout_constraintStart_toStartOf="@id/guideline2">
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -454,9 +491,69 @@
 
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ct_paymentcalendar"
+                app:layout_constraintTop_toBottomOf="@id/ct_viewloandetails"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:text="Payment calendar"
+                    android:textSize="16sp"
+                    android:id="@+id/tv_paymentcalendar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_paymentcalendar"
+                    android:id="@+id/rv_emis"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ct_transactions"
+                app:layout_constraintTop_toBottomOf="@id/ct_paymentcalendar"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:text="Transactions"
+                    android:textSize="16sp"
+                    android:id="@+id/tv_transactions"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_transactions"
+                    android:id="@+id/rv_transactions"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

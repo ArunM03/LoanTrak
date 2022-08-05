@@ -1,12 +1,16 @@
 package com.loantrackingsystem.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.LoanEmiData
 import com.loantrackingsystem.app.databinding.RvEmicalendarBinding
+import com.loantrackingsystem.app.other.Constants
 import java.text.SimpleDateFormat
 
 
@@ -57,6 +61,7 @@ class EmiCalendarAdapter()  : RecyclerView.Adapter<EmiCalendarAdapter.LoanHistor
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: LoanHistoryViewHolder, position: Int) {
         
         val data = emiCalendarList[position]
@@ -65,10 +70,16 @@ class EmiCalendarAdapter()  : RecyclerView.Adapter<EmiCalendarAdapter.LoanHistor
             with(holder) {
 
                 binding.tvStatusData.text  = data.status
-                binding.tvAmountData.text  = data.status
+                binding.tvAmountData.text  = "₹" + data.amount
                 binding.tvEmiDate.text  = data.date
 
                 binding.tvEmiDuecount.text = "${getText(position+1)} Monthly Due Date"
+
+                if(data.status == Constants.NOT_PAID){
+                    binding.tvStatusData.setTextColor(ContextCompat.getColor(context, R.color.green))
+                }else{
+                    binding.tvStatusData.setTextColor(ContextCompat.getColor(context, R.color.red))
+                }
 
             }
 

@@ -93,7 +93,11 @@
     <fragment
         android:id="@+id/viewLoanFragment"
         android:name="com.loantrackingsystem.app.ui.loan.ViewLoanFragment"
-        android:label="@string/viewloan" />
+        android:label="@string/viewloan" >
+        <action
+            android:id="@+id/action_viewLoanFragment_to_updateTransactionFragment"
+            app:destination="@id/updateTransactionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loanHistoryFragment"
         android:name="com.loantrackingsystem.app.ui.loan.LoanHistoryFragment"
@@ -156,6 +160,14 @@
     <fragment
         android:id="@+id/loanDetailsFragment"
         android:name="com.loantrackingsystem.app.ui.loan.LoanDetailsFragment"
-        android:label="Loan Details" />
+        android:label="Loan Details" >
+        <action
+            android:id="@+id/action_loanDetailsFragment_to_updateTransactionFragment"
+            app:destination="@id/updateTransactionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateTransactionFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.UpdateTransactionFragment"
+        android:label="UpdateTransactionFragment" />
 
 </navigation>

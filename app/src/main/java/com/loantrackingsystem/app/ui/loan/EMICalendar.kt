@@ -3,6 +3,7 @@ package com.loantrackingsystem.app.ui.loan
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.loantrackingsystem.adapter.EmiCalendarAdapter
 import com.loantrackingsystem.app.R
@@ -34,6 +35,12 @@ class EMICalendar  : Fragment(R.layout.fragment_emicalendar) {
 
 
         emiCalendar.emiCalendarList = getEMICalendar()
+
+        emiCalendar.setOnItemClickListener {
+            Constants.curLoanEMIDate = it
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_loanDetailsFragment_to_updateTransactionFragment)
+        }
 
 
     }
@@ -68,7 +75,7 @@ class EMICalendar  : Fragment(R.layout.fragment_emicalendar) {
             if(paidList.size >= emi){
                 emiCalendarList.add(paidList[emi-1])
             }else{
-                emiCalendarList.add(LoanEmiData(emi-1,"01/$month/$year","Not Paid",emiAmount.toString()))
+                emiCalendarList.add(LoanEmiData(emi-1,"01/$month/$year",Constants.NOT_PAID,emiAmount.toString()))
             }
 
         }
