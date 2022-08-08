@@ -255,7 +255,6 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         binding.rvEmis.adapter = emiCalendar
         binding.rvEmis.layoutManager = LinearLayoutManager(requireContext())
 
-
         emiCalendar.emiCalendarList = getEMICalendar()
 
         emiCalendar.setOnItemClickListener {
@@ -275,11 +274,11 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         transactions.emiCalendarList = Constants.loanData.emiData
 
-        transactions.setOnItemClickListener {
+/*        transactions.setOnItemClickListener {
             Constants.curLoanEMIDate = it
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                 .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
-        }
+        }*/
 
     }
 

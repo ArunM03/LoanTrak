@@ -24,6 +24,7 @@ object Constants {
     var isFirstTime = false
 
     var isSetPin = false
+    var isPinChange = false
 
 
     var loanData = LoanDataModel()

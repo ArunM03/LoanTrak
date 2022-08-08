@@ -202,6 +202,7 @@
                 android:background="@color/grey_100"
                 android:fontFamily="@font/inter_regular"
                 android:hint="Enter reason"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +218,7 @@
                 android:background="@color/grey_550"
                 android:id="@+id/tv_reasonborder"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_description"/>
+                app:layout_constraintTop_toBottomOf="@id/ed_othereasons"/>
 
 
 
@@ -455,6 +456,7 @@
                 android:textColor="@color/blue_200"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/rg_status"
                 app:layout_constraintTop_toBottomOf="@id/tv_loanvalueborder" />
@@ -466,6 +468,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="@id/tv_loanvalueborder"
                 android:id="@+id/rg_status"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@id/guideline2">
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -513,11 +516,77 @@
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ct_paymentcalendar_title"
+                    android:background="@color/purple_500"
+                    app:layout_constraintTop_toBottomOf="@id/tv_paymentcalendar"
+                    android:layout_marginTop="16dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_emi_date"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:background="@color/purple_200"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_duedate_value"
+                        android:gravity="center"
+                        android:text="SI No"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_duedate_value"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:layout_marginStart="1dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_status_data"
+                        app:layout_constraintStart_toEndOf="@id/tv_emi_date"
+                        android:text="Due date"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_status_data"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="1dp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_amount_data"
+                        app:layout_constraintStart_toEndOf="@id/tv_duedate_value"
+                        android:text="Status"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_amount_data"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="1dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_status_data"
+                        android:text="Amount"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_paymentcalendar"
+                    app:layout_constraintTop_toBottomOf="@id/ct_paymentcalendar_title"
                     android:id="@+id/rv_emis"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

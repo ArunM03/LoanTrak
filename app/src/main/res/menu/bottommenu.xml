@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/about_us"
         android:title="About us"
         android:icon="@drawable/ic_action_aboutus"/>
-<!--    <item
+   <item
         android:id="@+id/set_pin"
-        android:orderInCategory="100"
         android:title="Set Pin"
-        app:showAsAction="withText" />-->
+       android:icon="@drawable/ic_action_setpin"  />
     <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"

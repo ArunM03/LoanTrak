@@ -1,11 +1,13 @@
 package com.loantrackingsystem.app.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.UserData
 import com.loantrackingsystem.app.databinding.FragmentPinBinding
@@ -59,9 +61,20 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         binding.ivLogin.setImageResource(curIllust)
 
         if(Constants.isSetPin){
+            binding.tvForgetpassword.visibility = View.GONE
             binding.cdConfirmpin.visibility = View.VISIBLE
         }else{
+            binding.tvForgetpassword.visibility = View.VISIBLE
             binding.cdConfirmpin.visibility = View.GONE
+        }
+
+        binding.tvForgetpassword.setOnClickListener {
+            Constants.isLanguageChanged = false
+            sharedPref.setUserData(UserData())
+            sharedPref.setUserLoginStatus()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
+            Toast.makeText(requireContext(), "you will be logged out, login with user details and set mpin again. Your old mpin will be removed", Toast.LENGTH_LONG).show()
         }
 
         mainViewModel.errorPinCreatedLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -126,11 +139,20 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
                 }
                 if(pin == userData.pin){
 
+                    if (Constants.isPinChange) {
+                        Constants.isSetPin = true
+                        Constants.isPinChange = false
+                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                            .navigate(R.id.pinFragment)
+                    }else{
+                        Constants.isSetPin = false
+                        Constants.isPinChange = false
+                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                            .navigate(R.id.action_pinFragment_to_tabViewFragment)
+                    }
                 /*        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                             .navigate(R.id.action_pinFragment_to_nav_gallery)*/
 
-                           Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                            .navigate(R.id.action_pinFragment_to_tabViewFragment)
 
                 }else{
                     Toast.makeText(requireContext(),getString(R.string.incorrectpin), Toast.LENGTH_SHORT).show()

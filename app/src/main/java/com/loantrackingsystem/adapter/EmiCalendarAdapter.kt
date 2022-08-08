@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.LoanEmiData
 import com.loantrackingsystem.app.databinding.RvEmicalendarBinding
+import com.loantrackingsystem.app.databinding.RvPaymentcalendarTablevalueBinding
 import com.loantrackingsystem.app.other.Constants
 import java.text.SimpleDateFormat
 
 
 class EmiCalendarAdapter()  : RecyclerView.Adapter<EmiCalendarAdapter.LoanHistoryViewHolder>()  {
 
-    class LoanHistoryViewHolder(val binding : RvEmicalendarBinding) : RecyclerView.ViewHolder(binding.root)
+    class LoanHistoryViewHolder(val binding : RvPaymentcalendarTablevalueBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var onItemClickListener: ((LoanEmiData) -> Unit)? = null
 
@@ -47,7 +48,7 @@ class EmiCalendarAdapter()  : RecyclerView.Adapter<EmiCalendarAdapter.LoanHistor
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  LoanHistoryViewHolder {
-        val binding = RvEmicalendarBinding.inflate(
+        val binding = RvPaymentcalendarTablevalueBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -73,7 +74,7 @@ class EmiCalendarAdapter()  : RecyclerView.Adapter<EmiCalendarAdapter.LoanHistor
                 binding.tvAmountData.text  = "₹" + data.amount
                 binding.tvEmiDate.text  = data.date
 
-                binding.tvEmiDuecount.text = "${getText(position+1)} Monthly Due Date"
+                binding.tvSinoDate.text = getText(position+1)//"${getText(position+1)} Monthly Due Date"
 
                 if(data.status == Constants.NOT_PAID){
                     binding.tvStatusData.setTextColor(ContextCompat.getColor(context, R.color.green))

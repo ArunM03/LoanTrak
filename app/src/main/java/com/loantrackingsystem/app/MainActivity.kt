@@ -190,6 +190,11 @@ class MainActivity : AppCompatActivity() {
     private fun showMenu(v: View, @MenuRes menuRes: Int) {
         val popup = PopupMenu(this, v)
         popup.menuInflater.inflate(menuRes, popup.menu)
+        if (sharedPref.getUserData().pin != "null"){
+            popup.menu.apply {
+                this.findItem(R.id.set_pin).setTitle("Change Pin")
+            }
+        }
         popup.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.about_us -> {
@@ -208,15 +213,21 @@ class MainActivity : AppCompatActivity() {
                         .navigate(R.id.userProfileFragment)
                     true
                 }
-        /*        R.id.set_pin -> {
-                    Constants.isSetPin = true
+                R.id.set_pin -> {
+                    if (sharedPref.getUserData().pin == "null"){
+                        Constants.isSetPin = true
+                        Constants.isPinChange = false
+                    }else{
+                        Constants.isSetPin = false
+                        Constants.isPinChange = true
+                    }
                     Navigation.findNavController(
                         this@MainActivity,
                         R.id.nav_host_fragment_content_main
                     )
                         .navigate(R.id.pinFragment)
                     true
-                }*/
+                }
                 R.id.action_settings -> {
                     Constants.isLanguageChanged = true
                     Navigation.findNavController(
