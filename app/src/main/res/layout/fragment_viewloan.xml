@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_constraint"
+    android:background="@color/green_bg"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
@@ -328,6 +329,7 @@
                 android:hint="@string/enter_interest"
                 android:inputType="numberDecimal"
                 android:textSize="14sp"
+                android:maxLength="2"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline2"

@@ -19,7 +19,11 @@ data class LoanDataModel(
     var loanGiverPhone : String = "",
     var usersPhone : List<String>  = listOf(),
     var loanID : String = "",
-    var emiData : List<LoanEmiData> = listOf()
+    var emiData : List<LoanEmiData> = listOf(),
+    var loanCreator : String = "",
+    var isInReview : String = "",
+    var secondPersonStatus : String = "",
+    var secondPersonComment : String = ""
 )
 data class LoanEmiData(
     var index : Int = 0,

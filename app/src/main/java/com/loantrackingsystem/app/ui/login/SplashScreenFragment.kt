@@ -46,7 +46,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
                 if(curLang != "null"){
                     if (sharedPref.getUserLoginStatus() ){
 
-                        if(sharedPref.getUserData().pin != "null"){
+                        if(sharedPref.getUserDataModel().pin != "null"){
                             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                                 .navigate(R.id.action_splashScreenFragment_to_pinFragment)
                         }else{

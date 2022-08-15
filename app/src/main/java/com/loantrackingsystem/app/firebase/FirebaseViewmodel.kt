@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.loantrackingsystem.app.data.LoanDataModel
-import com.loantrackingsystem.app.data.LoanPersonDataModel
-import com.loantrackingsystem.app.data.UserData
-import com.loantrackingsystem.app.data.UserDataModel
+import com.loantrackingsystem.app.data.*
 import com.loantrackingsystem.app.other.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +51,28 @@ class FirebaseViewmodel : ViewModel() {
 
     }
 
+    private var _userDataLive = MutableLiveData<UserDataModel>()
+    var userDataLive: LiveData<UserDataModel> = _userDataLive
+    private var _errorUserDataLive = MutableLiveData<String>()
+    var errorUserDataLive: LiveData<String> = _errorUserDataLive
+
+    fun getUserData(mobileNumber : String) = viewModelScope.launch(Dispatchers.IO) {
+
+        try {
+            val users = usersCollection.whereEqualTo("phoneNumber",mobileNumber).get().await().toObjects(UserDataModel::class.java)
+
+            if(users.isNotEmpty()){
+                _userDataLive.postValue(users[0])
+            }else{
+                _errorUserDataLive.postValue("Empty")
+            }
+
+        } catch (e: Exception) {
+            _errorUserDataLive.postValue(e.message)
+        }
+
+    }
+
     private var _userUpdatedLive = MutableLiveData<String>()
     var userUpdatedLive: LiveData<String> = _userUpdatedLive
     private var _errorUserUpdatedLive = MutableLiveData<String>()
@@ -80,6 +100,27 @@ class FirebaseViewmodel : ViewModel() {
 
     }
 
+    fun updateUserToken(token : String,userId: String) = viewModelScope.launch(Dispatchers.IO) {
+
+        try {
+
+            usersCollection.document(userId).update(
+                "tokenId",token
+            ).addOnSuccessListener {
+                _userUpdatedLive.postValue(token)
+            }.addOnFailureListener {
+                _errorUserUpdatedLive.postValue("Failure")
+            }
+
+        } catch (e: Exception) {
+
+            _errorUserUpdatedLive.postValue(e.message)
+
+        }
+
+    }
+
+
 
     private var _pinCreatedLive = MutableLiveData<UserDataModel>()
     var pinCreatedLive: LiveData<UserDataModel> = _pinCreatedLive
@@ -89,16 +130,65 @@ class FirebaseViewmodel : ViewModel() {
     fun updatePIN(userData: UserDataModel) = viewModelScope.launch(Dispatchers.IO) {
 
         try {
+
              usersCollection.document(userData.userId).update("pin",userData.pin).addOnSuccessListener {
                 _pinCreatedLive.postValue(userData)
             }.addOnFailureListener {
                 _errorPinCreatedLive.postValue(it.message)
             }
 
-
         } catch (e: Exception) {
 
             _errorPinCreatedLive.postValue(e.message)
+
+        }
+
+    }
+
+    private var _notificationUpdatedLive = MutableLiveData<UserDataModel>()
+    var notificationUpdatedLive: LiveData<UserDataModel> = _notificationUpdatedLive
+    private var _errorNotificationUpdatedLive = MutableLiveData<String>()
+    var errorNotificationUpdatedLive: LiveData<String> = _errorNotificationUpdatedLive
+
+    fun updateNotification(userData: UserDataModel,notificationData : NotificationDataForUser) = viewModelScope.launch(Dispatchers.IO) {
+
+        try {
+
+            usersCollection.document(userData.userId).update(
+                mapOf(
+                    "pendingNotificationCount" to FieldValue.increment(1L),
+                    "notifications" to FieldValue.arrayUnion(notificationData)
+                )
+            ).addOnSuccessListener {
+                _notificationUpdatedLive.postValue(userData)
+            }.addOnFailureListener {
+                _errorNotificationUpdatedLive.postValue(it.message)
+            }
+
+        } catch (e: Exception) {
+
+            _errorNotificationUpdatedLive.postValue(e.message)
+
+        }
+
+    }
+
+    fun clearNotification(userData: UserDataModel) = viewModelScope.launch(Dispatchers.IO) {
+
+        try {
+            usersCollection.document(userData.userId).update(
+                mapOf(
+                    "pendingNotificationCount" to 0,
+                )
+            ).addOnSuccessListener {
+                _notificationUpdatedLive.postValue(userData)
+            }.addOnFailureListener {
+                _errorNotificationUpdatedLive.postValue(it.message)
+            }
+
+        } catch (e: Exception) {
+
+            _errorNotificationUpdatedLive.postValue(e.message)
 
         }
 
@@ -120,7 +210,6 @@ class FirebaseViewmodel : ViewModel() {
                 _userLoginLive.postValue(users[0])
 
             }else{
-                
 
                 _errorUserLoginLive.postValue("Invalid Credentials")
 

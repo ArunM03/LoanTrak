@@ -23,13 +23,19 @@ import android.telephony.SmsManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import com.loantrackingsystem.app.data.LoanDataModel
+import com.loantrackingsystem.app.TOPIC
+import com.loantrackingsystem.app.data.*
 
-import com.loantrackingsystem.app.data.LoanPersonData
-import com.loantrackingsystem.app.data.LoanPersonDataModel
 import com.loantrackingsystem.app.firebase.FirebaseViewmodel
+import com.loantrackingsystem.app.firebase.NotificationData
+import com.loantrackingsystem.app.firebase.PushNotification
+import com.loantrackingsystem.app.firebase.RetrofitInstance
 import com.loantrackingsystem.app.other.MyDialog
 import com.loantrackingsystem.app.other.SharedPref
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 const val PICK_CONTACT = 11
@@ -49,6 +55,8 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
     lateinit var loanPersons : MutableList<String>
     lateinit var loanPersonsData : MutableList<LoanPersonDataModel>
     lateinit var myDialog: MyDialog
+    var tokenId = ""
+    var secondPersonDataModel = UserDataModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -142,7 +150,12 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                             username,
                             userphno,
                             listOf<String>(userphno,phone),
-                            loanId
+                            loanId,
+                            listOf(),
+                            userId,
+                            Constants.YES,
+                            "",
+                            ""
                         )
                     }else {
                         LoanDataModel(
@@ -162,7 +175,12 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                             name,
                             phone,
                             listOf<String>(userphno,phone),
-                            loanId
+                            loanId,
+                            listOf(),
+                            userId,
+                            Constants.YES,
+                            "",
+                            ""
                         )
                     }
 
@@ -242,6 +260,10 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
             myDialog.dismissProgressDialog()
 
+            sendNotification(PushNotification(NotificationData(username,"your new loan request is initiated, review it!"), tokenId))
+
+            mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan"))
+
             sendSMS(number)
 
             Toast.makeText(requireContext(), getString(R.string.added), Toast.LENGTH_SHORT)
@@ -268,18 +290,25 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
         })
 
 
-  /*    binding.tvEnddateValue.setOnClickListener {
 
-            showDatePickerDialog(true)
+        mainViewModel.userDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            secondPersonDataModel = it
+            tokenId = it.tokenId
+        })
 
-        }*/
+
+        /*    binding.tvEnddateValue.setOnClickListener {
+
+                  showDatePickerDialog(true)
+
+              }*/
 
         binding.edInterest.doAfterTextChanged {
 
             it?.let {
                 if(binding.edInterest.hasFocus()){
                     val amount = binding.edAmount.text.toString()
-                    if(amount.isNotEmpty()){
+                    if(amount.isNotEmpty() && it.isNotEmpty()){
                         val emi = amount.toInt() * (it.toString().toFloat()/100)
                         binding.edEmi.setText(emi.toString())
                     }
@@ -295,7 +324,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
             it?.let {
                 if(binding.edEmi.hasFocus()){
                     val amount = binding.edAmount.text.toString()
-                    if(amount.isNotEmpty()){
+                    if(amount.isNotEmpty() && it.isNotEmpty()){
                         val emi = ((it.toString().toFloat()) / amount.toInt()) * 100
                         binding.edInterest.setText(emi.toString())
                     }
@@ -349,7 +378,6 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
         return names
     }
 
-
     fun setSpinner(spinner: Spinner, spinnerList : List<String>,isName : Boolean = false,isReason : Boolean = false) {
         val adapter = object :
             ArrayAdapter<Any>(
@@ -393,6 +421,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                //     Toast.makeText(requireContext(), "${spinner.selectedItem.toString()} and ${loanPersonData}", Toast.LENGTH_SHORT).show()
                     if(loanPersonData.isNotEmpty()){
                         binding.edPhonenumber.text = loanPersonData[0].phone
+                        mainViewModel.getUserData(loanPersonData[0].phone)
                         number = loanPersonData[0].phone
                     }
                 }
@@ -435,7 +464,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
                     number = number2
                     binding.edPhonenumber.setText(number2)
-
+                    mainViewModel.getUserData(number2)
 
                    // sendSMS(number)
                 }
@@ -487,4 +516,27 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
     }
 //You have been invited to Loan Tracking App by $name  to track loan. Please install app using the following link https://play.google.com/store/apps/details?id=com.loantrackingsystem.app
+}
+
+fun Fragment.sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+
+    try {
+        val response = RetrofitInstance.api.postNotification(notification)
+        if(response.isSuccessful) {
+            withContext(Dispatchers.Main) {
+          //      Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
+            }
+            //  Log.d(TAG, "Response: ${Gson().toJson(response)}")
+        } else {
+            withContext(Dispatchers.Main) {
+             //   Toast.makeText(requireContext(), "Unsuccessful", Toast.LENGTH_SHORT).show()
+            }
+            //    Log.e(TAG, response.errorBody().toString())
+        }
+    } catch(e: Exception) {
+        withContext(Dispatchers.Main){
+          //  Toast.makeText(requireContext(),"Something went wrong ${e.message}",Toast.LENGTH_SHORT).show()
+        }
+        // Log.e(TAG, e.toString())
+    }
 }

@@ -15,6 +15,7 @@ class SharedPref(context: Context) {
     val USERLOGIN = "userlogin"
     val CURLANGUAGE = "CurLanguage"
     val SETPIN = "SetPin"
+    val NotificationCount = "NOTIFICATIONCOUNT"
 
     fun setUserData(userData: UserData){
         val gson =  Gson()
@@ -37,6 +38,17 @@ class SharedPref(context: Context) {
             putBoolean(SETPIN,true)
             apply()
         }
+    }
+
+    fun setNotifciations(count : Int){
+        editor.apply {
+            putInt(NotificationCount,count)
+            apply()
+        }
+    }
+
+    fun getNotifications() : Int{
+        return sharedpref.getInt(NotificationCount,0)
     }
 
     fun getPin() : Boolean{

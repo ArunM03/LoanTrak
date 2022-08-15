@@ -51,6 +51,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
     lateinit var binding : FragmentDashboardBinding
     lateinit var mainViewModel: FirebaseViewmodel
     lateinit var loanHistoryAdapter: LoanHistoryAdapter
+    lateinit var underReviewLoansAdapter : LoanHistoryAdapter
     lateinit var sharedPref: SharedPref
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,6 +77,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         val userData = sharedPref.getUserDataModel()
 
         loanHistoryAdapter = LoanHistoryAdapter(true,userData.phoneNumber)
+        underReviewLoansAdapter = LoanHistoryAdapter(true,userData.phoneNumber)
 
         binding.cdAddloan.setOnClickListener {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
@@ -94,15 +96,18 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         binding.rvLoans.adapter = loanHistoryAdapter
         binding.rvLoans.layoutManager = LinearLayoutManager(requireContext())
 
-
+        binding.rvUnderreviewloans.adapter = underReviewLoansAdapter
+        binding.rvUnderreviewloans.layoutManager = LinearLayoutManager(requireContext())
 
         mainViewModel.getLoans(userData.userId,type,userData.phoneNumber)
 
         mainViewModel.getLoansLive.observe(viewLifecycleOwner, Observer {
 
+        //    Toast.makeText(requireContext(), "${it.size}", Toast.LENGTH_SHORT).show()
+
             binding.progressbar.visibility = View.INVISIBLE
 
-            val pendingLoans = it.filter { it.status == Constants.NOT_PAID }.sortedBy { it.name }
+            val pendingLoans = it.filter { it.status == Constants.NOT_PAID }.filter { it.isInReview != Constants.YES }.sortedBy { it.name }
 
             if(it.isNotEmpty()){
                 binding.rvLoans.visibility = View.VISIBLE
@@ -135,7 +140,17 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
             setData(pendingLoans)
 
+            val loansUnderReview = it.filter { it.status == Constants.NOT_PAID }.filter { it.isInReview == Constants.YES }.sortedBy { it.name }
 
+            if (loansUnderReview.isEmpty()){
+                binding.tvReviewloans.visibility = View.GONE
+                binding.rvUnderreviewloans.visibility = View.GONE
+            }else{
+                binding.tvReviewloans.visibility = View.VISIBLE
+                binding.rvUnderreviewloans.visibility = View.VISIBLE
+            }
+
+            underReviewLoansAdapter.loanHistoryList = loansUnderReview
 
         })
 
@@ -191,6 +206,12 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
             Constants.loanData = it
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                 .navigate(R.id.action_tabViewFragment_to_viewLoanFragment)
+        }
+
+        underReviewLoansAdapter.setOnItemClickListener {
+            Constants.loanData = it
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_tabViewFragment_to_viewReviewLoanFragment)
         }
 
 

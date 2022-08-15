@@ -28,6 +28,7 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
     var isFirstTimePin = ""
     lateinit var mainViewModel: FirebaseViewmodel
     lateinit var myDialog : MyDialog
+    var isPinDeleted = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,12 +70,11 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         }
 
         binding.tvForgetpassword.setOnClickListener {
-            Constants.isLanguageChanged = false
-            sharedPref.setUserData(UserData())
-            sharedPref.setUserLoginStatus()
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            requireActivity().finish()
-            Toast.makeText(requireContext(), "you will be logged out, login with user details and set mpin again. Your old mpin will be removed", Toast.LENGTH_LONG).show()
+            mainViewModel.updatePIN(userData.apply {
+                this.pin = "null"
+            })
+            isPinDeleted = true
+            myDialog.showProgressDialog("Please wait",this)
         }
 
         mainViewModel.errorPinCreatedLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -86,18 +86,28 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
 
         mainViewModel.pinCreatedLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
-            sharedPref.setUserDataModel(userData.apply {
-                this.pin = it.pin
-            })
+            if (isPinDeleted){
+                Constants.isLanguageChanged = false
+                sharedPref.setUserData(UserData())
+                sharedPref.setUserLoginStatus()
+                startActivity(Intent(requireContext(), MainActivity::class.java))
+                requireActivity().finish()
+                Toast.makeText(requireContext(), "you will be logged out, login with user details and set mpin again. Your old mpin will be removed", Toast.LENGTH_LONG).show()
 
-            sharedPref.setPin()
+            }else{
+                sharedPref.setUserDataModel(userData.apply {
+                    this.pin = it.pin
+                })
 
-            Toast.makeText(requireContext(), "Pin Created", Toast.LENGTH_SHORT).show()
+                sharedPref.setPin()
 
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_pinFragment_to_nav_gallery)
+                Toast.makeText(requireContext(), "Pin Created", Toast.LENGTH_SHORT).show()
 
-            myDialog.dismissProgressDialog()
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_pinFragment_to_nav_gallery)
+
+                myDialog.dismissProgressDialog()
+            }
 
         })
 
@@ -155,7 +165,7 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
 
 
                 }else{
-                    Toast.makeText(requireContext(),getString(R.string.incorrectpin), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),getString(R.string.incorrectpin) + "${userData}", Toast.LENGTH_SHORT).show()
                 }
 
             }else{

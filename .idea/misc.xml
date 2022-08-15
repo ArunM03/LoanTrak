@@ -5,9 +5,14 @@
       <map>
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/drawable-anydpi/ic_action_imageedit.xml" value="0.2203125" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/drawable-anydpi/ic_action_logout.xml" value="0.2203125" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/drawable-anydpi/ic_action_notification.xml" value="0.2203125" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/drawable-anydpi/ic_action_profile.xml" value="0.2203125" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/drawable-anydpi/ic_action_setpin.xml" value="0.2203125" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/activity_main.xml" value="0.14447463768115942" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/app_bar_main.xml" value="0.14447463768115942" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/content_main.xml" value="0.12952898550724637" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/dialog_progress.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_addloan.xml" value="0.4083333333333333" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_addloan.xml" value="0.25" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_emicalendar.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
@@ -15,19 +20,23 @@
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_loanhistory.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_loantabview.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_loantransactions.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_login.xml" value="0.17" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_notification.xml" value="0.12952898550724637" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_pin.xml" value="0.25" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
-        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_register.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_splashscreen.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_tabview.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_tabview.xml" value="0.5" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_updatetransaction.xml" value="0.2" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_userprofile.xml" value="0.25" />
-        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_viewloan.xml" value="0.33" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_viewloan.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/fragment_viewreview.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/nav_header_main.xml" value="0.12454710144927536" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_emicalendar.xml" value="0.33" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_group.xml" value="0.22" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_loanhistory.xml" value="0.22" />
+        <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_notification.xml" value="0.33" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/rv_paymentcalendar_tablevalue.xml" value="0.33" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/sp_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Admin/Downloads/LoanTrackingSystem/LoanTrackingSystem/app/src/main/res/layout/vp_image.xml" value="0.14855072463768115" />

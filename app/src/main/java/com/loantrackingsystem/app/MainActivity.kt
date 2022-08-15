@@ -37,13 +37,21 @@ import androidx.appcompat.view.menu.MenuBuilder
 
 import androidx.appcompat.view.menu.MenuPopupHelper
 import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.loantrackingsystem.app.firebase.FirebaseViewmodel
+import com.loantrackingsystem.app.other.Constants.userDataModel
+import com.loantrackingsystem.app.room.MainViewmodel
 
-
+const val TOPIC = "/topics/products"
 class MainActivity : AppCompatActivity() {
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     lateinit var sharedPref : SharedPref
+    lateinit var mainViewmodel: FirebaseViewmodel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -80,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        mainViewmodel = ViewModelProvider(this).get(FirebaseViewmodel::class.java)
 
 
         binding.appBarMain.layoutMain.bottomView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
@@ -174,6 +183,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        getToken()
+
+    //    subscribeNotifications()
 
     }
 
@@ -190,7 +202,7 @@ class MainActivity : AppCompatActivity() {
     private fun showMenu(v: View, @MenuRes menuRes: Int) {
         val popup = PopupMenu(this, v)
         popup.menuInflater.inflate(menuRes, popup.menu)
-        if (sharedPref.getUserData().pin != "null"){
+        if (sharedPref.getUserDataModel().pin != "null"){
             popup.menu.apply {
                 this.findItem(R.id.set_pin).setTitle("Change Pin")
             }
@@ -214,7 +226,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.set_pin -> {
-                    if (sharedPref.getUserData().pin == "null"){
+                    if (sharedPref.getUserDataModel().pin == "null"){
                         Constants.isSetPin = true
                         Constants.isPinChange = false
                     }else{
@@ -292,6 +304,35 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
+    private fun getToken(){
+
+        if (!sharedPref.getUserLoginStatus()){
+            return
+        }
+
+        val userDataModel2 = sharedPref.getUserDataModel()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                //  Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            if(userDataModel2.tokenId != task.result){
+                mainViewmodel.updateUserToken(task.result,userDataModel2.userId)
+            }
+
+        })
+
+        mainViewmodel.userUpdatedLive.observe(this, androidx.lifecycle.Observer {
+            sharedPref.setUserDataModel(userDataModel2.apply {
+                this.tokenId = it
+            })
+        })
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -303,6 +344,10 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    fun subscribeNotifications(){
+        // FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+    }
 
     fun hideToolbar(){
         binding.appBarMain.toolbar.visibility = View.GONE

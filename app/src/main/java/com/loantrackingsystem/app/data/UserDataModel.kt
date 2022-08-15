@@ -12,5 +12,8 @@ data class UserDataModel(
     var pin : String = "",
     var phoneNumber : String = "",
     var firstName : String = "",
-    var secondName : String = ""
+    var secondName : String = "",
+    var tokenId : String = "",
+    var pendingNotificationCount : Int = 0,
+    var notifications : List<NotificationDataForUser> = listOf()
 )

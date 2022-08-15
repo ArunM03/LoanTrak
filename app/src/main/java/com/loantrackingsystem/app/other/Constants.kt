@@ -31,6 +31,14 @@ object Constants {
 
     var curLoanEMIDate = LoanEmiData()
 
+    val YES = "Yes"
+    val NO = "No"
+
+    var notificationList = listOf<NotificationDataForUser>()
+
+    const val BASE_URL = "https://fcm.googleapis.com"
+    const val SERVER_KEY = "AAAAj9-LXKQ:APA91bFZYsrTddCmzmuvRskAsQtX6B3dnMF-tXOnWTC3-2gsYlH8JX72renKpGVbvyBkM0SvU-pMbg_irkO1YsGmDlo-hPIMC0zcmo9U-A0myD_lSl1IFZMyEWuyCT51-OQ4g5XAeaH5"
+    const val CONTENT_TYPE = "application/json"
 
 
     fun requestPermissions(activity_host : Activity) {

@@ -258,9 +258,11 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         emiCalendar.emiCalendarList = getEMICalendar()
 
         emiCalendar.setOnItemClickListener {
-            Constants.curLoanEMIDate = it
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
+            if (it.status != Constants.PAID){
+                Constants.curLoanEMIDate = it
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
+            }
         }
 
     }
@@ -403,14 +405,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
             }
         }
     }
-    fun ViewGroup.deepForEach(function: View.() -> Unit) {
-        this.forEach { child ->
-            child.function()
-            if (child is ViewGroup) {
-                child.deepForEach(function)
-            }
-        }
-    }
+
 
     override fun onStop() {
         super.onStop()
@@ -546,4 +541,12 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 fun Fragment.getDate(ms : Long) : String{
     val format = SimpleDateFormat("MMM dd, yyyy")
     return format.format(ms)
+}
+fun ViewGroup.deepForEach(function: View.() -> Unit) {
+    this.forEach { child ->
+        child.function()
+        if (child is ViewGroup) {
+            child.deepForEach(function)
+        }
+    }
 }

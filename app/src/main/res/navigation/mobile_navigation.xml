@@ -152,6 +152,12 @@
         <action
             android:id="@+id/action_tabViewFragment_to_loanDetailsFragment"
             app:destination="@id/loanDetailsFragment" />
+        <action
+            android:id="@+id/action_tabViewFragment_to_viewReviewLoanFragment"
+            app:destination="@id/viewReviewLoanFragment" />
+        <action
+            android:id="@+id/action_tabViewFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
@@ -169,5 +175,13 @@
         android:id="@+id/updateTransactionFragment"
         android:name="com.loantrackingsystem.app.ui.loan.UpdateTransactionFragment"
         android:label="UpdateTransactionFragment" />
+    <fragment
+        android:id="@+id/viewReviewLoanFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.ViewReviewLoanFragment"
+        android:label="ViewReviewLoanFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.loantrackingsystem.app.ui.dashboard.NotificationFragment"
+        android:label="NotificationFragment" />
 
 </navigation>

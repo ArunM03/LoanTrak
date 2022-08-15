@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/green_bg">
 
 
     <com.google.android.material.textview.MaterialTextView
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login"
@@ -34,7 +35,6 @@
             android:id="@+id/ed_username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey_100"
             android:fontFamily="@font/inter_regular"
             android:hint="@string/username"
             android:padding="16dp"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cd_username"
@@ -60,7 +60,6 @@
             android:id="@+id/ed_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey_100"
             android:fontFamily="@font/inter_regular"
             android:hint="@string/password"
             android:inputType="textPassword"
