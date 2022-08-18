@@ -46,7 +46,14 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
         notificationAdapter.loanHistoryList = Constants.notificationList.sortedByDescending { it.time }
 
         notificationAdapter.setOnItemClickListener {
-           requireActivity()
+            if (it.loanId.isEmpty()){
+                requireActivity().onBackPressed()
+            }else{
+                Constants.loanId = it.loanId
+                Constants.isFromNotification = true
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                    .navigate(R.id.action_notificationFragment_to_viewReviewLoanFragment)
+            }
         }
 
         mainViewModel.clearNotification(sharedPref.getUserDataModel())

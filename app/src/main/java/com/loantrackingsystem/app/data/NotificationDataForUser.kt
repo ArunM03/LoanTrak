@@ -4,5 +4,6 @@ import com.google.firebase.Timestamp
 
 data class NotificationDataForUser(
     val time : String = "",
-    val message : String = ""
+    val message : String = "",
+    val loanId : String = ""
 )

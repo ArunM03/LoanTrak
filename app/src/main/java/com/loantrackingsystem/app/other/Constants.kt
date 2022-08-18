@@ -31,6 +31,9 @@ object Constants {
 
     var curLoanEMIDate = LoanEmiData()
 
+    var isFromNotification = false
+    var loanId = ""
+
     val YES = "Yes"
     val NO = "No"
 

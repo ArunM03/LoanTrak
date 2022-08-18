@@ -138,16 +138,18 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
             loanHistoryAdapter.loanHistoryList = pendingLoans
 
-            setData(pendingLoans)
+            setData(pendingLoans.take(5))
 
             val loansUnderReview = it.filter { it.status == Constants.NOT_PAID }.filter { it.isInReview == Constants.YES }.sortedBy { it.name }
 
             if (loansUnderReview.isEmpty()){
                 binding.tvReviewloans.visibility = View.GONE
                 binding.rvUnderreviewloans.visibility = View.GONE
+                binding.ctLoansreviewTitle.visibility = View.GONE
             }else{
                 binding.tvReviewloans.visibility = View.VISIBLE
                 binding.rvUnderreviewloans.visibility = View.VISIBLE
+                binding.ctLoansreviewTitle.visibility = View.VISIBLE
             }
 
             underReviewLoansAdapter.loanHistoryList = loansUnderReview
@@ -296,7 +298,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         binding.piechart.setDrawEntryLabels(false)
 
         val legend: Legend? =  binding.piechart.legend
-        legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+        legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
 
     }
 

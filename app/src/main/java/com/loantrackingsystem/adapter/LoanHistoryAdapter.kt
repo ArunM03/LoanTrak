@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.LoanDataModel
+import com.loantrackingsystem.app.databinding.RvLoanBinding
 import com.loantrackingsystem.app.databinding.RvLoanhistoryBinding
 import com.loantrackingsystem.app.other.Constants
 import java.text.SimpleDateFormat
 
 class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = "")  : RecyclerView.Adapter<LoanHistoryAdapter.LoanHistoryViewHolder>()  {
 
-    class LoanHistoryViewHolder(val binding : RvLoanhistoryBinding) : RecyclerView.ViewHolder(binding.root)
+    class LoanHistoryViewHolder(val binding : RvLoanBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var onItemClickListener: ((LoanDataModel) -> Unit)? = null
 
@@ -46,7 +47,7 @@ class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = ""
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  LoanHistoryViewHolder {
-        val binding = RvLoanhistoryBinding.inflate(
+        val binding = RvLoanBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -67,7 +68,7 @@ class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = ""
             with(holder) {
 
                 binding.tvAmount.text = "₹${data.amount}"
-                binding.tvStatus.text = data.status
+             //   binding.tvStatus.text = data.status
 
                 if(phone == data.phone){
 
@@ -79,7 +80,7 @@ class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = ""
 
                 }
 
-                if(isPending){
+/*                if(isPending){
                     binding.tvStatus.visibility = View.GONE
                 }
 
@@ -93,7 +94,7 @@ class LoanHistoryAdapter(val isPending : Boolean = false,val phone : String = ""
 
                 }
 
-                binding.tvDate.text = getDate(data.date.toLong())
+                binding.tvDate.text = getDate(data.date.toLong())*/
 
             }
 

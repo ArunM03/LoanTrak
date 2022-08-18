@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayoutMediator
@@ -58,6 +59,7 @@ class TabViewFragment : Fragment(R.layout.fragment_tabview) {
         binding.tvDashboardTitle.text = "Hi, ${userData.firstName}"
 
         mainViewModel.userDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        //    Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             sharedPref.setNotifciations(it.pendingNotificationCount)
             Constants.notificationList = it.notifications
 
@@ -67,6 +69,10 @@ class TabViewFragment : Fragment(R.layout.fragment_tabview) {
             }else{
                 binding.cdNotificationcount.visibility = View.GONE
             }
+        })
+
+        mainViewModel.errorUserDataLive.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
         })
 
         binding.ivNotification.setOnClickListener {

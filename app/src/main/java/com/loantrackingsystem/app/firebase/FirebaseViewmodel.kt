@@ -51,6 +51,28 @@ class FirebaseViewmodel : ViewModel() {
 
     }
 
+    private var _loanDataLive = MutableLiveData<LoanDataModel>()
+    var loanDataLive: LiveData<LoanDataModel> = _loanDataLive
+    private var _errorLoanDataLive = MutableLiveData<String>()
+    var errorLoanDataLive: LiveData<String> = _errorLoanDataLive
+
+    fun getLoanData(loanId : String) = viewModelScope.launch(Dispatchers.IO) {
+
+        try {
+            val loans = loansCollection.whereEqualTo("loanID",loanId).get().await().toObjects(LoanDataModel::class.java)
+
+            if(loans.isNotEmpty()){
+                _loanDataLive.postValue(loans[0])
+            }else{
+                _errorLoanDataLive.postValue("Empty")
+            }
+
+        } catch (e: Exception) {
+            _errorLoanDataLive.postValue(e.message)
+        }
+
+    }
+
     private var _userDataLive = MutableLiveData<UserDataModel>()
     var userDataLive: LiveData<UserDataModel> = _userDataLive
     private var _errorUserDataLive = MutableLiveData<String>()
@@ -232,7 +254,7 @@ class FirebaseViewmodel : ViewModel() {
 
         try {
             loansCollection.document(loanDataModel.loanID).set(loanDataModel).addOnSuccessListener {
-                _addLoanLive.postValue("Success")
+                _addLoanLive.postValue(loanDataModel.loanID)
             }.addOnFailureListener {
                 _errorAddLoanLive.postValue(it.message)
             }

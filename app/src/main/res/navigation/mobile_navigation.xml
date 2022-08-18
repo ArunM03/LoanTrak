@@ -182,6 +182,10 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.loantrackingsystem.app.ui.dashboard.NotificationFragment"
-        android:label="NotificationFragment" />
+        android:label="NotificationFragment" >
+        <action
+            android:id="@+id/action_notificationFragment_to_viewReviewLoanFragment"
+            app:destination="@id/viewReviewLoanFragment" />
+    </fragment>
 
 </navigation>

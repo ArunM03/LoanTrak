@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.loantrackingsystem.app.R
@@ -62,11 +63,34 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
 
         userDataModel = sharedPref.getUserDataModel()
 
+        if (Constants.isFromNotification){
+
+          mainViewModel.getLoanData(Constants.loanId)
+
+           mainViewModel.loanDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+               binding.progressbar.visibility = View.GONE
+               binding.ctViewloandetails.visibility = View.VISIBLE
+               Constants.loanData = it
+               setData()
+           })
+
+            mainViewModel.errorLoanDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            })
+
+        }else{
+
+            binding.progressbar.visibility = View.GONE
+            binding.ctViewloandetails.visibility = View.VISIBLE
+
+            setData()
+
+        }
 
 
         setSpinner(binding.edDescription, loanReason,true)
 
-        setData()
+
 
         binding.cdAccept.setOnClickListener {
             mainViewModel.addLoan(Constants.loanData.apply {
@@ -182,37 +206,6 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
         }
 
 
-        val loanData = Constants.loanData
-
-        if (userDataModel.userId != Constants.loanData.loanCreator){
-
-            if (loanData.secondPersonComment.isEmpty()){
-                binding.cdRequestforchange.visibility = View.VISIBLE
-                binding.cdAccept.visibility = View.VISIBLE
-                binding.tvOr.visibility = View.VISIBLE
-                binding.edRequestchange.visibility = View.VISIBLE
-                binding.ctViewloandetails.deepForEach { isEnabled = false }
-                if (loanData.secondPersonStatus.isNotEmpty()){
-                    binding.tvChanges.visibility = View.VISIBLE
-                    binding.tvChanges.text = loanData.secondPersonStatus
-                }
-            }else{
-                binding.tvChanges.visibility = View.VISIBLE
-                binding.tvChanges.text = "Changes Request is in Review"
-            }
-
-        }else{
-            if (loanData.secondPersonComment.isEmpty()){
-                binding.tvChanges.visibility = View.VISIBLE
-                binding.tvChanges.text = "Loan is in Review"
-            }else{
-                binding.cdMadechanges.visibility = View.VISIBLE
-                binding.cdCantmakechanges.visibility = View.VISIBLE
-                binding.tvChanges.visibility = View.VISIBLE
-                binding.ctViewloandetails.deepForEach { isEnabled = true }
-            }
-        }
-
 
         mainViewModel.addLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
@@ -221,12 +214,12 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
             if (binding.cdAccept.visibility == View.VISIBLE){
                 sendNotification(PushNotification(NotificationData(userDataModel.firstName,message),tokenId))
                 mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(
-                    Calendar.getInstance().timeInMillis.toString(),message)
+                    Calendar.getInstance().timeInMillis.toString(),message,it)
                 )
             }else{
                 sendNotification(PushNotification(NotificationData(userDataModel.firstName,"Sent for review!"),tokenId))
                 mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(
-                    Calendar.getInstance().timeInMillis.toString(),"Sent for review")
+                    Calendar.getInstance().timeInMillis.toString(),"Sent for review",it)
                 )
             }
 
@@ -241,6 +234,36 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
             secondPersonDataModel = it
         })
 
+        binding.edInterest.doAfterTextChanged {
+
+            it?.let {
+                if(binding.edInterest.hasFocus()){
+                    val amount = binding.edAmount.text.toString()
+                    if(amount.isNotEmpty() && it.isNotEmpty()){
+                        val emi = amount.toInt() * (it.toString().toFloat()/100)
+                        binding.edEmi.setText(emi.toString())
+                    }
+                }
+
+            }
+
+        }
+
+
+        binding.edEmi.doAfterTextChanged {
+
+            it?.let {
+                if(binding.edEmi.hasFocus()){
+                    val amount = binding.edAmount.text.toString()
+                    if(amount.isNotEmpty() && it.isNotEmpty()){
+                        val emi = ((it.toString().toFloat()) / amount.toInt()) * 100
+                        binding.edInterest.setText(emi.toString())
+                    }
+
+                }
+            }
+
+        }
 
     }
 
@@ -295,6 +318,40 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
         }
         binding.tvDateValue.text = getDate(date.toLong())
 
+
+
+        val loanData = Constants.loanData
+
+        if (userDataModel.userId != Constants.loanData.loanCreator){
+
+            if (loanData.secondPersonComment.isEmpty()){
+                binding.cdRequestforchange.visibility = View.VISIBLE
+                binding.cdAccept.visibility = View.VISIBLE
+                binding.tvOr.visibility = View.VISIBLE
+                binding.edRequestchange.visibility = View.VISIBLE
+                binding.ctViewloandetails.deepForEach { isEnabled = false }
+                if (loanData.secondPersonStatus.isNotEmpty()){
+                    binding.tvChanges.visibility = View.VISIBLE
+                    binding.tvChanges.text = loanData.secondPersonStatus
+                }
+            }else{
+                binding.tvChanges.visibility = View.VISIBLE
+                binding.tvChanges.text = "Changes Request is in Review"
+            }
+
+        }else{
+            if (loanData.secondPersonComment.isEmpty()){
+                binding.tvChanges.visibility = View.VISIBLE
+                binding.tvChanges.text = "Loan is in Review"
+            }else{
+                binding.cdMadechanges.visibility = View.VISIBLE
+                binding.cdCantmakechanges.visibility = View.VISIBLE
+                binding.tvChanges.visibility = View.VISIBLE
+                binding.ctViewloandetails.deepForEach { isEnabled = true }
+            }
+        }
+
+
     }
 
     fun setSpinner(spinner: Spinner, spinnerList : List<String>, isReason : Boolean = false) {
@@ -337,6 +394,11 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
 
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Constants.isFromNotification = false
     }
 
 }

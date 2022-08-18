@@ -262,7 +262,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
             sendNotification(PushNotification(NotificationData(username,"your new loan request is initiated, review it!"), tokenId))
 
-            mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan"))
+            mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan",it))
 
             sendSMS(number)
 
