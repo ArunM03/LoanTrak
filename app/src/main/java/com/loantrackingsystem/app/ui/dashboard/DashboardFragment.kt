@@ -38,6 +38,7 @@ import com.loantrackingsystem.adapter.LoanHistoryAdapter
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.LoanData
 import com.loantrackingsystem.app.data.LoanDataModel
+import com.loantrackingsystem.app.data.UserDataModel
 import com.loantrackingsystem.app.firebase.FirebaseViewmodel
 import com.loantrackingsystem.app.other.Constants
 import com.loantrackingsystem.app.other.SharedPref
@@ -53,6 +54,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
     lateinit var loanHistoryAdapter: LoanHistoryAdapter
     lateinit var underReviewLoansAdapter : LoanHistoryAdapter
     lateinit var sharedPref: SharedPref
+    lateinit var userData : UserDataModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -74,7 +76,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
         sharedPref = SharedPref(requireContext())
 
-        val userData = sharedPref.getUserDataModel()
+         userData = sharedPref.getUserDataModel()
 
         loanHistoryAdapter = LoanHistoryAdapter(true,userData.phoneNumber)
         underReviewLoansAdapter = LoanHistoryAdapter(true,userData.phoneNumber)
@@ -138,7 +140,9 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
             loanHistoryAdapter.loanHistoryList = pendingLoans
 
-            setData(pendingLoans.take(5))
+
+           // sumsLoanData(pendingLoans)
+            setData(sumsLoanData(pendingLoans))
 
             val loansUnderReview = it.filter { it.status == Constants.NOT_PAID }.filter { it.isInReview == Constants.YES }.sortedBy { it.name }
 
@@ -222,6 +226,40 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
     }
 
+    fun sumsLoanData(it : List<LoanDataModel>) : List<LoanDataModel> {
+
+        val loansData = mutableListOf<LoanDataModel>()
+
+        for (loan in it){
+
+            var name = ""
+
+            val loans = if(userData.phoneNumber == loan.phone){
+                name = loan.username
+                loansData.filter { it.name == loan.username }
+            }else{
+                if (loansData.size < 6){
+                    name = loan.name
+                    loansData.filter { it.name == loan.name }
+                }else{
+                    name = "Others"
+                    loansData.filter { it.name == "Others" }
+                }
+            }
+
+            if (loans.isEmpty()){
+                loansData.add(LoanDataModel(name, amount = loan.amount))
+            }else{
+               loansData.filter { it.name == name }[0].apply {
+                    this.amount = (this.amount.toInt() + loan.amount.toInt()).toString()
+                }
+            }
+        }
+
+        return loansData
+
+    }
+
     fun getTotalAmount(it : List<LoanDataModel>) : Long{
 
         var amount = 0L
@@ -239,7 +277,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
         binding.piechart.setUsePercentValues(true)
         binding.piechart.description.isEnabled = false
-        binding.piechart.setExtraOffsets(5f, 10f, 5f, 5f)
+        binding.piechart.setExtraOffsets(5f, 10f, 25f, 5f)
 
         binding.piechart.dragDecelerationFrictionCoef = 0.95f
 
@@ -297,8 +335,8 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
         binding.piechart.setEntryLabelTextSize(12f)
         binding.piechart.setDrawEntryLabels(false)
 
-        val legend: Legend? =  binding.piechart.legend
-        legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+       /* val legend: Legend? =  binding.piechart.legend
+        legend?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT*/
 
     }
 
@@ -316,7 +354,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
                 )
             )
         }
-        val dataSet = PieDataSet(entries, getString(R.string.all_pending_loans))
+        val dataSet = PieDataSet(entries,"")
         dataSet.setDrawIcons(false)
         dataSet.sliceSpace = 3f
         dataSet.iconsOffset = MPPointF(0F, 40F)

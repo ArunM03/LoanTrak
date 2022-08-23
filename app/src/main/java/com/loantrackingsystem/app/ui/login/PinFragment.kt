@@ -165,7 +165,7 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
 
 
                 }else{
-                    Toast.makeText(requireContext(),getString(R.string.incorrectpin) + "${userData}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),getString(R.string.incorrectpin) , Toast.LENGTH_SHORT).show()
                 }
 
             }else{

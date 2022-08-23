@@ -107,17 +107,18 @@
                 android:id="@+id/tv_totalloanamount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
+                app:layout_goneMarginStart="6dp"
                 tools:text="₹75,000"
                 android:visibility="gone"
                 android:textColor="@color/green"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/tv_totalloanamounttext"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/switch_hideshow"
+                app:layout_constraintBottom_toBottomOf="@id/switch_hideshow"
+                app:layout_constraintStart_toEndOf="@id/switch_hideshow" />
 
 
             <TextView
@@ -139,7 +140,6 @@
                 android:id="@+id/tv_totalunpaidloan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
                 tools:text="05"
@@ -147,8 +147,9 @@
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/tv_totalunpaidloantext"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@id/tv_totalunpaidloantext"
+                app:layout_constraintTop_toTopOf="@id/tv_totalunpaidloantext"
+                app:layout_constraintStart_toEndOf="@id/tv_totalunpaidloantext" />
 
             <TextView
                 android:id="@+id/tv_totalloantext"

@@ -56,7 +56,8 @@ class TabViewFragment : Fragment(R.layout.fragment_tabview) {
             binding.cdNotificationcount.visibility = View.GONE
         }
 
-        binding.tvDashboardTitle.text = "Hi, ${userData.firstName}"
+     //   binding.tvDashboardTitle.text = "Hi, ${userData.firstName}"
+        binding.tvDashboardTitle.text = "LoanTrak"
 
         mainViewModel.userDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
         //    Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()

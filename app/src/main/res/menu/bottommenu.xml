@@ -10,6 +10,12 @@
         android:id="@+id/set_pin"
         android:title="Set Pin"
        android:icon="@drawable/ic_action_setpin"  />
+
+    <item
+        android:id="@+id/loanHistoryFragment"
+        android:icon="@drawable/ic_action_history"
+        android:title="@string/menu_slideshow" />
+
     <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
