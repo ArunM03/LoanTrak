@@ -103,9 +103,9 @@ class MainActivity : AppCompatActivity() {
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
                         .navigate(R.id.tabViewFragment)
                 }
-                if(item.itemId ==   R.id.loanHistoryFragment ){
-                    Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
-                        .navigate(R.id.loanHistoryFragment)
+                if(item.itemId ==   R.id.requestLoanFragment ){
+                        Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
+                            .navigate(R.id.requestLoanFragment)
                 }
                 if(item.itemId ==   R.id.addloan ){
                     Navigation.findNavController(this@MainActivity, R.id.nav_host_fragment_content_main)
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment,R.id.registerFragment ,R.id.pinFragment, R.id.languageFragment ,R.id.splashScreenFragment -> {
+                R.id.loginFragment,R.id.registerFragment ,R.id.pinFragment, R.id.languageFragment ,R.id.splashScreenFragment, R.id.currencyFragment -> {
                     hideBottomNavigation()
                     hideToolbar()
                 }
@@ -204,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         popup.menuInflater.inflate(menuRes, popup.menu)
         if (sharedPref.getUserDataModel().pin != "null"){
             popup.menu.apply {
-                this.findItem(R.id.set_pin).setTitle("Change Pin")
+                this.findItem(R.id.set_pin).setTitle(R.string.changepin)
             }
         }
         popup.setOnMenuItemClickListener {
@@ -223,6 +223,14 @@ class MainActivity : AppCompatActivity() {
                         R.id.nav_host_fragment_content_main
                     )
                         .navigate(R.id.userProfileFragment)
+                    true
+                }
+                R.id.loanHistoryFragment -> {
+                    Navigation.findNavController(
+                        this@MainActivity,
+                        R.id.nav_host_fragment_content_main
+                    )
+                        .navigate(R.id.loanHistoryFragment)
                     true
                 }
                 R.id.set_pin -> {

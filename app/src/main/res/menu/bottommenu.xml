@@ -4,11 +4,11 @@
 
     <item
         android:id="@+id/about_us"
-        android:title="About us"
+        android:title="@string/about_us"
         android:icon="@drawable/ic_action_aboutus"/>
    <item
         android:id="@+id/set_pin"
-        android:title="Set Pin"
+        android:title="@string/set_pin"
        android:icon="@drawable/ic_action_setpin"  />
 
     <item
@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/action_profilt"
-        android:title="My Profile"
+        android:title="@string/my_profile"
         android:icon="@drawable/ic_action_profile" />
 
     <item

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_interest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/interest"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_principalamount_value" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        android:id="@+id/ed_amount"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/tv_interest" />
+
+    <TextView
+        android:id="@+id/tv_principalamount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="Principle"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        android:id="@+id/tv_principalamount_value"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/tv_principalamount" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/startdate"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ed_amount" />
+
+
+    <TextView
+        android:id="@+id/tv_dateValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_100"
+        android:fontFamily="@font/inter_regular"
+        tools:text="12, June 2022"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tv_date"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/tv_enddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="End Date"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dateValue" />
+
+
+    <TextView
+        android:id="@+id/tv_enddateValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_100"
+        android:fontFamily="@font/inter_regular"
+        tools:text="12, June 2022"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tv_enddate"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/tv_numofdays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="No. of days"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_enddateValue" />
+
+
+    <TextView
+        android:id="@+id/tv_numofdaysValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_100"
+        android:fontFamily="@font/inter_regular"
+        tools:text="36"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tv_numofdays"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_interestamount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        android:text="Interest outstanding as of today"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:paddingEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_numofdaysValue" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        android:id="@+id/tv_interestamount_value"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/tv_interestamount" />
+
+
+    <TextView
+        android:id="@+id/tv_finalamount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        android:paddingEnd="8dp"
+        android:text="Final Amount as of today"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_interestamount" />
+
+    <TextView
+        android:id="@+id/tv_repayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="No. of days"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_enddateValue" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        android:id="@+id/tv_finalamount_value"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/tv_finalamount" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        android:id="@+id/tv_principle_repayment_value"
+        android:textColor="@color/black"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@id/tv_principlerepayment"
+        app:layout_constraintTop_toTopOf="@id/tv_principlerepayment" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        android:id="@+id/tv_interest_repayment_value"
+        android:textColor="@color/black"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/tv_principle_repayment_value" />
+
+
+
+
+    <TextView
+        android:id="@+id/tv_principlerepayment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        android:paddingEnd="8dp"
+        android:text="Principle Repayment"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_finalamount" />
+
+
+    <TextView
+        android:id="@+id/tv_interestrepayment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="start"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        android:paddingEnd="8dp"
+        android:text="Interest Repayment"
+        android:textColor="@color/blue_200"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tv_interest_repayment_value"
+        app:layout_constraintTop_toBottomOf="@id/tv_principlerepayment" />
+
+
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="@string/status"
+        android:textColor="@color/blue_200"
+        android:visibility="gone"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_enddateValue" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_status"
+        android:layout_marginTop="8dp"
+        android:id="@+id/rg_status"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tv_status">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_paid"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:buttonTint="@color/red"
+            android:checked="true"
+            android:id="@+id/rb_notpaid"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/paid"
+            android:textColor="@color/green"
+            android:textStyle="bold"
+            android:buttonTint="@color/green"
+            android:layout_marginStart="24dp"
+            android:checked="true"
+            android:id="@+id/rb_paid"/>
+
+    </RadioGroup>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cd_addloan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_interest_repayment_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35000002"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

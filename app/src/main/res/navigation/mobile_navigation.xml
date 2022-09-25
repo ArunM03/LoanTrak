@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_nav_gallery_to_viewLoanFragment"
             app:destination="@id/viewLoanFragment" />
+        <action
+            android:id="@+id/action_nav_gallery_to_requestLoanFragment"
+            app:destination="@id/requestLoanFragment" />
     </fragment>
 
     <fragment
@@ -97,6 +100,9 @@
         <action
             android:id="@+id/action_viewLoanFragment_to_updateTransactionFragment"
             app:destination="@id/updateTransactionFragment" />
+        <action
+            android:id="@+id/action_viewLoanFragment_to_adhocFragment"
+            app:destination="@id/adhocFragment" />
     </fragment>
     <fragment
         android:id="@+id/loanHistoryFragment"
@@ -133,12 +139,18 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_pinFragment"
             app:destination="@id/pinFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.loantrackingsystem.app.ui.home.ProfileFragment"
-        android:label="Groups" />
+        android:label="@string/groups" />
     <fragment
         android:id="@+id/tabViewFragment"
         android:name="com.loantrackingsystem.app.ui.dashboard.TabViewFragment"
@@ -162,11 +174,11 @@
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.loantrackingsystem.app.ui.home.UserProfileFragment"
-        android:label="My Profile" />
+        android:label="@string/my_profile" />
     <fragment
         android:id="@+id/loanDetailsFragment"
         android:name="com.loantrackingsystem.app.ui.loan.LoanDetailsFragment"
-        android:label="Loan Details" >
+        android:label="@string/loan_Details" >
         <action
             android:id="@+id/action_loanDetailsFragment_to_updateTransactionFragment"
             app:destination="@id/updateTransactionFragment" />
@@ -174,18 +186,37 @@
     <fragment
         android:id="@+id/updateTransactionFragment"
         android:name="com.loantrackingsystem.app.ui.loan.UpdateTransactionFragment"
-        android:label="UpdateTransactionFragment" />
+        android:label="@string/update_transaction" />
     <fragment
         android:id="@+id/viewReviewLoanFragment"
         android:name="com.loantrackingsystem.app.ui.loan.ViewReviewLoanFragment"
-        android:label="ViewReviewLoanFragment" />
+        android:label="@string/view_loan" />
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.loantrackingsystem.app.ui.dashboard.NotificationFragment"
-        android:label="NotificationFragment" >
+        android:label="@string/notifications" >
         <action
             android:id="@+id/action_notificationFragment_to_viewReviewLoanFragment"
             app:destination="@id/viewReviewLoanFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/requestLoanFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.RequestLoanFragment"
+        android:label="@string/request_loan" />
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.loantrackingsystem.app.ui.login.CurrencyFragment"
+        android:label="CurrencyFragment" >
+        <action
+            android:id="@+id/action_currencyFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adhocFragment"
+        android:name="com.loantrackingsystem.app.ui.loan.AdhocFragment"
+        android:label="Adhoc Payment" />
 
 </navigation>

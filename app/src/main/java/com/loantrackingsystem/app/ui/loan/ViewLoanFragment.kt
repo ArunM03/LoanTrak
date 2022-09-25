@@ -19,6 +19,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.loantrackingsystem.adapter.AdhocTransactionAdapter
 import com.loantrackingsystem.adapter.EmiCalendarAdapter
 import com.loantrackingsystem.adapter.LoanHistoryAdapter
 import com.loantrackingsystem.app.MainActivity
@@ -46,6 +47,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
     var isNew = false
     lateinit var emiCalendar: EmiCalendarAdapter
     lateinit var transactions: EmiCalendarAdapter
+    lateinit var adhocTransactionAdapter: AdhocTransactionAdapter
     lateinit var loanPersons : MutableList<String>
     lateinit var myDialog: MyDialog
     var isEnabled = false
@@ -76,13 +78,23 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
         binding.parentConstraint.deepForEach { isEnabled = false }
 
-        setPaymentCalendar()
-        setTransactions()
+        if (Constants.loanData.paymentType == ADHOC){
+            setAdhocTransactions()
+            binding.tvEmi.visibility = View.GONE
+            binding.edEmi.visibility = View.GONE
+        }else{
+            setPaymentCalendar()
+            setTransactions()
+            binding.tvEmi.visibility = View.VISIBLE
+            binding.edEmi.visibility = View.VISIBLE
+        }
+
 
         loanPersons = mutableListOf<String>(getString(R.string.selectperson))
 
         binding.rvEmis.isNestedScrollingEnabled = false
         binding.rvTransactions.isNestedScrollingEnabled = false
+        binding.rvAdhoctransactions.isNestedScrollingEnabled = false
 
         setSpinner(binding.edDescription, loanReason,true)
        // setSpinner(binding.edLoanType, loanType)
@@ -90,6 +102,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
         val activity = activity as MainActivity
         delete = activity.findViewById<ImageButton>(R.id.ib_delete)
         edit = activity.findViewById<ImageButton>(R.id.ib_edit)
+        edit.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
         delete.visibility = View.VISIBLE
         edit.visibility = View.VISIBLE
 
@@ -170,7 +183,6 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                         val emi = amount.toInt() * (it.toString().toFloat()/100)
                          binding.edEmi.setText(emi.toString())
                         }
-
                 }
 
             }
@@ -264,6 +276,23 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                     .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
             }
         }
+
+    }
+
+    fun setAdhocTransactions(){
+
+        adhocTransactionAdapter = AdhocTransactionAdapter()
+
+        binding.rvAdhoctransactions.adapter = adhocTransactionAdapter
+        binding.rvAdhoctransactions.layoutManager = LinearLayoutManager(requireContext())
+
+        adhocTransactionAdapter.emiCalendarList = Constants.loanData.adhocEmiDataList.sortedBy { it.date.toLong() }
+
+/*        transactions.setOnItemClickListener {
+            Constants.curLoanEMIDate = it
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_viewLoanFragment_to_updateTransactionFragment)
+        }*/
 
     }
 
@@ -382,6 +411,7 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
                 }
             }
         }
+
         adapter.setDropDownViewResource(R.layout.sp_layout)
         spinner.adapter = adapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -409,8 +439,8 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
 
     override fun onStop() {
         super.onStop()
-        delete.visibility = View.INVISIBLE
-        edit.visibility = View.INVISIBLE
+        delete.visibility = View.GONE
+        edit.visibility = View.GONE
     }
 
     private fun setData() {
@@ -447,6 +477,29 @@ class ViewLoanFragment : Fragment(R.layout.fragment_viewloan) {
          //   binding.edDescription.setSelection(loanType.indexOf(data.loanType))
         }
 
+        binding.fabPay.setOnClickListener {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.action_viewLoanFragment_to_adhocFragment)
+        }
+
+        if(data.paymentType == ADHOC){
+            binding.tvPaymenttypevalue.text = ADHOC
+            //   binding.edDescription.setSelection(loanType.indexOf(data.loanType))
+        }else{
+            binding.tvPaymenttypevalue.text = MONTHLY
+        }
+
+        if (data.paymentType == ADHOC){
+            binding.ctPaymentcalendar.visibility = View.GONE
+            binding.ctTransactions.visibility = View.GONE
+            binding.ctAdhoctransactions.visibility = View.VISIBLE
+            binding.fabPay.visibility = View.VISIBLE
+        }else{
+            binding.ctPaymentcalendar.visibility = View.VISIBLE
+            binding.ctTransactions.visibility = View.VISIBLE
+            binding.ctAdhoctransactions.visibility = View.GONE
+            binding.fabPay.visibility = View.GONE
+        }
 
 
         if(data.status == Constants.PAID){

@@ -17,30 +17,35 @@ import android.net.Uri
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 
 
 import android.telephony.SmsManager
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.TOPIC
 import com.loantrackingsystem.app.data.*
+import com.loantrackingsystem.app.firebase.*
 
-import com.loantrackingsystem.app.firebase.FirebaseViewmodel
-import com.loantrackingsystem.app.firebase.NotificationData
-import com.loantrackingsystem.app.firebase.PushNotification
-import com.loantrackingsystem.app.firebase.RetrofitInstance
 import com.loantrackingsystem.app.other.MyDialog
 import com.loantrackingsystem.app.other.SharedPref
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.random.Random
 
 
-const val PICK_CONTACT = 11
-
-class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
+class RequestLoanFragment : Fragment(R.layout.fragment_addloan) {
 
     lateinit var binding : FragmentAddloanBinding
    // lateinit var mainViewModel: MainViewmodel
@@ -59,6 +64,8 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
     var month = 0
     var year = 0
     var secondPersonDataModel = UserDataModel()
+    var myToken = ""
+    lateinit var userData2: UserDataModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -70,11 +77,11 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
         username = userData.username*/
 
         val userData = sharedPref.getUserDataModel()
+        userData2 = userData
         userId = userData.userId
         username = userData.firstName
         userphno = userData.phoneNumber
-
-
+        myToken = userData.tokenId
 
         setUI(view)
 
@@ -156,7 +163,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                             loanId,
                             listOf(),
                             userId,
-                            Constants.NO,
+                            Constants.YES,
                             "",
                             "",
                             paymentType
@@ -182,7 +189,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
                             loanId,
                             listOf(),
                             userId,
-                            Constants.NO,
+                            Constants.YES,
                             "",
                             "",
                             paymentType
@@ -233,7 +240,6 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         }
 
-
         binding.tvDateValue.text = getDate(Calendar.getInstance().timeInMillis)
 
         binding.tvDateValue.setOnClickListener {
@@ -244,6 +250,7 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         setSpinner(binding.edMonths, listOf("0","1","2","3","4","5","6","7","8","9","10","11"))
         setSpinner(binding.edYrs, listOf("0","1","2","3","4","5","6","7","8","9","10"))
+
         setSpinner(binding.edPaymenttype, listOf(ADHOC, MONTHLY))
 
         setSpinner(binding.edLoanType, listOf("Loan Given","Loan Taken"))
@@ -267,9 +274,15 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
             myDialog.dismissProgressDialog()
 
-          //  sendNotification(PushNotification(NotificationData(username,"your new loan request is initiated, review it!"), tokenId))
 
-          //  mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan",it))
+            if (userData2.aadhar.isEmpty()) {
+                sendOfflineNotification()
+            }
+
+            sendNotification(PushNotification(NotificationData(username,"your new loan request is initiated, review it!"), tokenId))
+
+            mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan",it))
+            mainViewModel.updateNotification(userData2, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"Please update your profile","Profile"))
 
             sendSMS(number)
 
@@ -365,14 +378,58 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         binding.tvSubmth.setOnClickListener {
             if (month>0){
-            month--
-            binding.edMonthstxt.text = month.toString()
-            binding.edYrtext.text = year.toString()
+                month--
+                binding.edMonthstxt.text = month.toString()
+                binding.edYrtext.text = year.toString()
             }
 
         }
 
 
+
+    }
+
+    fun sendOfflineNotification(){
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        val notificationManager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationID = Random.nextInt()
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(notificationManager)
+        }
+
+        Constants.isProfile = true
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        //val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        }
+
+        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            .setContentTitle("Update Profile")
+            .setContentText("Click Here")
+            .setSmallIcon(R.drawable.ic_action_notification)
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_SOUND)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        notificationManager.notify(notificationID, notification)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(notificationManager: NotificationManager) {
+        val channelName = "LoanTrak Channel Name"
+        val channel = NotificationChannel(CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH).apply {
+            description = "LoanTrak channel description"
+            enableLights(true)
+            lightColor = Color.GREEN
+        }
+        notificationManager.createNotificationChannel(channel)
     }
 
     fun showDatePickerDialog(isEndDate : Boolean = false){
@@ -557,26 +614,6 @@ class AddLoanFragment : Fragment(R.layout.fragment_addloan) {
     }
 //You have been invited to Loan Tracking App by $name  to track loan. Please install app using the following link https://play.google.com/store/apps/details?id=com.loantrackingsystem.app
 }
+private const val CHANNEL_ID = "loantrak_channel"
 
-fun Fragment.sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
 
-    try {
-        val response = RetrofitInstance.api.postNotification(notification)
-        if(response.isSuccessful) {
-            withContext(Dispatchers.Main) {
-          //      Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
-            }
-            //  Log.d(TAG, "Response: ${Gson().toJson(response)}")
-        } else {
-            withContext(Dispatchers.Main) {
-             //   Toast.makeText(requireContext(), "Unsuccessful", Toast.LENGTH_SHORT).show()
-            }
-            //    Log.e(TAG, response.errorBody().toString())
-        }
-    } catch(e: Exception) {
-        withContext(Dispatchers.Main){
-          //  Toast.makeText(requireContext(),"Something went wrong ${e.message}",Toast.LENGTH_SHORT).show()
-        }
-        // Log.e(TAG, e.toString())
-    }
-}

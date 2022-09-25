@@ -410,6 +410,18 @@
                     android:textSize="16sp" />
             </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pay"
+                    app:layout_constraintTop_toBottomOf="@id/cd_addloan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:id="@+id/fab_pay"/>
+
             <TextView
                 android:id="@+id/tv_loanType"
                 android:layout_width="wrap_content"
@@ -417,7 +429,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="Loan Type"
+                android:text="@string/loan_type"
                 android:textColor="@color/blue_200"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
@@ -448,7 +460,46 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_loanvalue"/>
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_550"
+                    android:id="@+id/tv_loantypeborder"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_loanType"/>
+
+
+                <TextView
+                    android:id="@+id/tv_paymenttype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:gravity="center"
+                    android:text="@string/payment_type"
+                    android:textColor="@color/blue_200"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_loantypeborder" />
+
+
+                <TextView
+                    android:id="@+id/tv_paymenttypevalue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/grey_100"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline2"
+                    app:layout_constraintTop_toTopOf="@id/tv_paymenttype"
+                    tools:text="12, June 2022" />
+
+
+                <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -461,14 +512,14 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/rg_status"
-                app:layout_constraintTop_toBottomOf="@id/tv_loanvalueborder" />
+                app:layout_constraintTop_toBottomOf="@id/tv_paymenttype" />
 
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="@id/tv_loanvalueborder"
+                app:layout_constraintTop_toTopOf="@id/tv_paymenttype"
                 android:id="@+id/rg_status"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@id/guideline2">
@@ -511,7 +562,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
-                    android:text="Payment calendar"
+                    android:text="@string/payment_calendar"
                     android:textSize="16sp"
                     android:id="@+id/tv_paymentcalendar"
                     app:layout_constraintTop_toTopOf="parent"
@@ -552,7 +603,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tv_status_data"
                         app:layout_constraintStart_toEndOf="@id/tv_emi_date"
-                        android:text="Due date"/>
+                        android:text="@string/due_date"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
@@ -567,7 +618,7 @@
                         android:layout_marginStart="1dp"
                         app:layout_constraintEnd_toStartOf="@id/tv_amount_data"
                         app:layout_constraintStart_toEndOf="@id/tv_duedate_value"
-                        android:text="Status"/>
+                        android:text="@string/status"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
@@ -582,7 +633,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_status_data"
-                        android:text="Amount"/>
+                        android:text="@string/amount"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -606,7 +657,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
-                    android:text="Transactions"
+                    android:text="@string/transactions"
                     android:textSize="16sp"
                     android:id="@+id/tv_transactions"
                     app:layout_constraintTop_toTopOf="parent"
@@ -622,6 +673,106 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ct_adhoctransactions"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/ct_transactions"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/transactions"
+                    android:textSize="16sp"
+                    android:id="@+id/tv_adhoctransactions"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ct_adhocpaymentcalendar_title"
+                    android:background="@color/purple_500"
+                    app:layout_constraintTop_toBottomOf="@id/tv_adhoctransactions"
+                    android:layout_marginTop="16dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:id="@+id/tv_sino_date"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:background="@color/purple_200"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_date_adhoc"
+                        android:gravity="center"
+                        android:text="SI No"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:id="@+id/tv_date_adhoc"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:layout_marginStart="1dp"
+                        android:textColor="@color/white"
+                        android:paddingTop="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:paddingBottom="2dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_Paidamt_data"
+                        app:layout_constraintStart_toEndOf="@id/tv_sino_date"
+                        android:text="@string/date"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_Paidamt_data"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="1dp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_paidinterest_data"
+                        app:layout_constraintStart_toEndOf="@id/tv_date_adhoc"
+                        android:text="Principle Amt Paid"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_paidinterest_data"
+                        android:gravity="center"
+                        android:background="@color/purple_200"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="1dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_Paidamt_data"
+                        android:text="Interest Amt Paid"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/ct_adhocpaymentcalendar_title"
+                    android:id="@+id/rv_adhoctransactions"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

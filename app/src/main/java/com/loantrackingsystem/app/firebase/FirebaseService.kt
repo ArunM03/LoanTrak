@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.R
+import com.loantrackingsystem.app.other.Constants
 import kotlin.random.Random
 
 private const val CHANNEL_ID = "loantrak_channel"
@@ -57,6 +58,7 @@ class FirebaseService : FirebaseMessagingService() {
         } else {
             PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
         }
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(message.data["title"])
             .setContentText(message.data["message"])

@@ -23,7 +23,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter Amount"
+        android:hint="@string/enter_amount"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/tv_amount"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
-        android:text="Date"
+        android:text="@string/date"
         android:textColor="@color/blue_200"
         android:layout_marginStart="16dp"
         android:textStyle="bold"
@@ -67,7 +67,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
-        android:text="Status"
+        android:text="@string/status"
         android:textColor="@color/blue_200"
         android:layout_marginStart="16dp"
         android:textStyle="bold"
@@ -126,7 +126,7 @@
             android:fontFamily="@font/inter_bold"
             android:gravity="center"
             android:padding="16dp"
-            android:text="Update"
+            android:text="@string/update"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </com.google.android.material.card.MaterialCardView>

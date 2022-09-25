@@ -49,10 +49,15 @@ class NotificationFragment : Fragment(R.layout.fragment_notification) {
             if (it.loanId.isEmpty()){
                 requireActivity().onBackPressed()
             }else{
-                Constants.loanId = it.loanId
-                Constants.isFromNotification = true
-                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.action_notificationFragment_to_viewReviewLoanFragment)
+                if (it.loanId == "Profile"){
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.action_notificationFragment_to_userProfileFragment)
+                }else{
+                    Constants.loanId = it.loanId
+                    Constants.isFromNotification = true
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                        .navigate(R.id.action_notificationFragment_to_viewReviewLoanFragment)
+                }
             }
         }
 

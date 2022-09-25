@@ -100,14 +100,24 @@ class FirebaseViewmodel : ViewModel() {
     private var _errorUserUpdatedLive = MutableLiveData<String>()
     var errorUserUpdatedLive: LiveData<String> = _errorUserUpdatedLive
 
-    fun updateUser(firstname : String, lastname : String, phoneNumber : String,userId: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateUser(firstname : String, lastname : String, phoneNumber : String,userId: String,aadhar : String, phoneNumber2 : String,address : String,address2: String,
+    address3: String,city : String,state : String,country : String,zipcode : String) = viewModelScope.launch(Dispatchers.IO) {
 
         try {
 
             usersCollection.document(userId).update(
                 mapOf("firstName" to firstname,
                 "secondName" to lastname,
-                "phoneNumber" to phoneNumber)
+                "phoneNumber" to phoneNumber,
+                "phoneNumber2" to phoneNumber2,
+                "aadhar" to aadhar,
+                "address" to address,
+                "address2" to address2,
+                "address3" to address3,
+                "city" to city,
+                "state" to state,
+                "country" to country,
+                "zipcode" to zipcode)
             ).addOnSuccessListener {
                 _userUpdatedLive.postValue("Success")
             }.addOnFailureListener {
@@ -233,7 +243,7 @@ class FirebaseViewmodel : ViewModel() {
 
             }else{
 
-                _errorUserLoginLive.postValue("Invalid Credentials")
+                _errorUserLoginLive.postValue("Login Failed, Invalid Username/password")
 
             }
 

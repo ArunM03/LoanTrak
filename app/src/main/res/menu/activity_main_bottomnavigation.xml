@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_action_home"
             android:title="@string/menu_gallery" />
         <item
-            android:id="@+id/loanHistoryFragment"
-            android:icon="@drawable/ic_action_history"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/requestLoanFragment"
+            android:icon="@drawable/ic_action_requestloan"
+            android:title="@string/request_loan" />
         <item
             android:id="@+id/addloan"
             android:icon="@drawable/ic_action_plus"
@@ -19,10 +19,10 @@
         <item
             android:id="@+id/profileFragment"
             android:icon="@drawable/ic_action_group"
-            android:title="Group" />
+            android:title="@string/groups" />
         <item
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_action_more"
-            android:title="More" />
+            android:title="@string/more" />
     </group>
 </menu>

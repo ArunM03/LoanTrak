@@ -23,7 +23,9 @@ data class LoanDataModel(
     var loanCreator : String = "",
     var isInReview : String = "",
     var secondPersonStatus : String = "",
-    var secondPersonComment : String = ""
+    var secondPersonComment : String = "",
+    var paymentType : String = "",
+    var adhocEmiDataList : List<AdhocEmiData> = listOf()
 )
 data class LoanEmiData(
     var index : Int = 0,
@@ -31,3 +33,13 @@ data class LoanEmiData(
     var status : String = "",
     var amount : String = ""
 )
+data class AdhocEmiData(
+    var index : Int = 0,
+    val date : String = "",
+    var paidPrincipleAmount : String = "",
+    var paidInterestAmount : String = "",
+    var remainingPrincipleAmount : String = "",
+    var remainingInterestAmount : String = ""
+)
+const val ADHOC = "Ad-hoc"
+const val MONTHLY = "Monthly"

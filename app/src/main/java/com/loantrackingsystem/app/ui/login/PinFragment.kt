@@ -1,9 +1,12 @@
 package com.loantrackingsystem.app.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -54,6 +57,9 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         //val userData = sharedPref.getUserData()
         val userData = sharedPref.getUserDataModel()
 
+        val  imgr = getActivity()?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
 
         val illusList = listOf(R.drawable.languageillustration,R.drawable.login_illustration,R.drawable.protection_illustration)
 
@@ -67,6 +73,11 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         }else{
             binding.tvForgetpassword.visibility = View.VISIBLE
             binding.cdConfirmpin.visibility = View.GONE
+            binding.edPin.requestFocus()
+        }
+
+        if(Constants.isPinChange || Constants.isSetPin){
+            binding.cdLogin.visibility = View.VISIBLE
         }
 
         binding.tvForgetpassword.setOnClickListener {
@@ -112,6 +123,31 @@ class PinFragment : Fragment(R.layout.fragment_pin) {
         })
 
        // Toast.makeText(requireContext(), "$userData", Toast.LENGTH_SHORT).show()
+
+        if (!Constants.isSetPin && !Constants.isPinChange){
+            binding.edPin.doAfterTextChanged {
+                it?.let {
+                    if(binding.edPin.hasFocus()){
+                        val pin = binding.edPin.text.toString()
+                        if(pin.isNotEmpty() && it.isNotEmpty()){
+                            if (pin.length>3){
+                                if(pin == userData.pin){
+                                    imgr.hideSoftInputFromWindow(view.windowToken, 0);
+                                        Constants.isSetPin = false
+                                        Constants.isPinChange = false
+                                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                                            .navigate(R.id.action_pinFragment_to_tabViewFragment)
+                                }else{
+                                    Toast.makeText(requireContext(),getString(R.string.incorrectpin) , Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
 
         binding.cdLogin.setOnClickListener {
 

@@ -84,12 +84,10 @@ class TabViewFragment : Fragment(R.layout.fragment_tabview) {
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager ) { tab, position ->
             tab.text = when (position){
-                0 -> "Loan Given"
-                else -> "Loan Taken"
+                0 -> getString(R.string.loangiven)
+                else -> getString(R.string.loantaken)
             }
         }.attach()
-
-
 
 
     }

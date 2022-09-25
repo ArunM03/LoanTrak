@@ -14,6 +14,7 @@ class SharedPref(context: Context) {
     val USERDATA = "userdata"
     val USERLOGIN = "userlogin"
     val CURLANGUAGE = "CurLanguage"
+    val CURCURRENCY = "Currency"
     val SETPIN = "SetPin"
     val NotificationCount = "NOTIFICATIONCOUNT"
 
@@ -91,6 +92,17 @@ class SharedPref(context: Context) {
         return sharedpref.getString(CURLANGUAGE, "null")
     }
 
+
+    fun setCurrency(language: String) {
+        editor.apply {
+            putString(CURCURRENCY, language)
+            apply()
+        }
+    }
+
+    fun getCurrency(): String? {
+        return sharedpref.getString(CURCURRENCY, "null")
+    }
 
 
 

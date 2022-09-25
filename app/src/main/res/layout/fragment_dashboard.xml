@@ -64,11 +64,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintWidth_percent="0.9"
         android:id="@+id/cd_summary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +94,7 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/tv_totalloanamounttext"
+                app:layout_constraintStart_toEndOf="@id/tv_totalloanamount"
                 android:layout_marginStart="16dp"
                 app:layout_constraintTop_toTopOf="@id/tv_totalloanamounttext"
                 app:layout_constraintBottom_toBottomOf="@id/tv_totalloanamounttext"
@@ -118,7 +117,7 @@
                 android:textSize="20sp"
                 app:layout_constraintTop_toTopOf="@id/switch_hideshow"
                 app:layout_constraintBottom_toBottomOf="@id/switch_hideshow"
-                app:layout_constraintStart_toEndOf="@id/switch_hideshow" />
+                app:layout_constraintStart_toEndOf="@id/tv_totalloanamounttext" />
 
 
             <TextView
@@ -128,7 +127,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="Active Loans"
+                android:text="@string/active_loans"
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
@@ -188,10 +187,9 @@
                 android:layout_width="0dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_totalunpaidloan"
                 android:layout_height="150dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintWidth_percent="0.7"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -221,6 +219,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ct_loans_title"
                     android:background="@color/purple_500"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_pendingloans"
                     android:layout_marginTop="8dp">
                     <com.google.android.material.textview.MaterialTextView
@@ -229,30 +229,32 @@
                         android:id="@+id/tv_emi_date"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
+                        android:paddingStart="16dp"
                         android:background="@color/purple_200"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tv_duedate_value"
-                        android:gravity="center"
-                        android:text="Name"/>
+                        android:gravity="start"
+                        android:text="@string/name"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_duedate_value"
-                        android:gravity="center"
+                        android:gravity="end"
                         android:background="@color/purple_200"
                         android:layout_marginStart="1dp"
                         android:textColor="@color/white"
                         android:paddingTop="2dp"
+                        android:paddingEnd="16dp"
                         android:paddingBottom="2dp"
                         android:textSize="16sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_emi_date"
-                        android:text="Amount"/>
+                        android:text="@string/amount"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -261,6 +263,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/ct_loans_title"
                 android:id="@+id/rv_loans"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:clipToPadding="true"/>
 
@@ -272,7 +276,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="Loans Under Review"
+                android:text="@string/loans_under_review"
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"
                 android:textStyle="bold"
@@ -284,6 +288,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ct_loansreview_title"
                 android:background="@color/purple_500"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_reviewloans"
                 android:layout_marginTop="8dp">
                 <com.google.android.material.textview.MaterialTextView
@@ -291,29 +297,31 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_emi_date2"
                     android:paddingTop="2dp"
+                    android:paddingStart="16dp"
                     android:paddingBottom="2dp"
                     android:background="@color/purple_200"
                     android:textColor="@color/white"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/tv_duedate_value2"
-                    android:gravity="center"
-                    android:text="Name"/>
+                    android:gravity="start"
+                    android:text="@string/name"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_duedate_value2"
-                    android:gravity="center"
+                    android:gravity="end"
                     android:background="@color/purple_200"
                     android:layout_marginStart="1dp"
                     android:textColor="@color/white"
                     android:paddingTop="2dp"
+                    android:paddingEnd="16dp"
                     android:paddingBottom="2dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_emi_date2"
-                    android:text="Amount"/>
+                    android:text="@string/amount"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -325,6 +333,8 @@
                 android:paddingBottom="60dp"
                 android:layout_marginBottom="16dp"
                 android:clipToPadding="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
 

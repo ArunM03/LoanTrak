@@ -277,7 +277,7 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
 
         binding.piechart.setUsePercentValues(true)
         binding.piechart.description.isEnabled = false
-        binding.piechart.setExtraOffsets(5f, 10f, 25f, 5f)
+        binding.piechart.setExtraOffsets(5f, 10f, 50f, 5f)
 
         binding.piechart.dragDecelerationFrictionCoef = 0.95f
 
@@ -311,7 +311,6 @@ class DashboardFragment(val type : String = "Loan Given") : Fragment(R.layout.fr
             override fun onNothingSelected() {
 
             }
-
         })
 
         binding.piechart.animateY(1400, Easing.EaseInOutQuad)

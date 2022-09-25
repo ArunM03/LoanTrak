@@ -27,6 +27,9 @@ object Constants {
     var isPinChange = false
 
 
+    var isProfile = false
+
+
     var loanData = LoanDataModel()
 
     var curLoanEMIDate = LoanEmiData()

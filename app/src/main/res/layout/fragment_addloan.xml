@@ -255,7 +255,7 @@
                 android:background="@color/grey_550"
                 android:id="@+id/tv_durationborder"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_enddate"/>
+                app:layout_constraintTop_toBottomOf="@id/ed_yrtext"/>
 
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -266,10 +266,47 @@
                 android:layout_marginEnd="16dp"
                 android:background="@color/grey_100"
                 android:hint="@string/username"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_enddate"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/guideline2"
                 app:layout_constraintTop_toTopOf="@id/tv_enddate" />
+
+            <TextView
+                android:id="@+id/ed_yrtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/grey_100"
+                android:text="0"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/tv_mnths"
+                app:layout_constraintStart_toStartOf="@id/tv_mnths"
+                app:layout_constraintTop_toBottomOf="@id/tv_mnths" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                app:layout_constraintStart_toEndOf="@id/ed_yrtext"
+                app:layout_constraintTop_toTopOf="@id/ed_yrtext"
+                app:layout_constraintBottom_toBottomOf="@id/ed_yrtext"
+                android:layout_marginStart="16dp"
+                android:textSize="32sp"
+                android:id="@+id/tv_addyr"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@id/ed_yrtext"
+                app:layout_constraintTop_toTopOf="@id/ed_yrtext"
+                app:layout_constraintBottom_toBottomOf="@id/ed_yrtext"
+                android:layout_marginEnd="16dp"
+                android:textSize="50sp"
+                android:id="@+id/tv_subyr"/>
 
 
             <TextView
@@ -279,10 +316,11 @@
                 android:layout_marginStart="16dp"
                 android:background="@color/grey_100"
                 android:fontFamily="@font/inter_regular"
-                android:text="mths"
+                android:text="Months"
                 android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/ed_months"
-                app:layout_constraintStart_toEndOf="@id/ed_months"
+                app:layout_constraintStart_toEndOf="@id/tv_mnths"
                 app:layout_constraintTop_toTopOf="@id/ed_months" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -293,11 +331,47 @@
                 android:layout_marginEnd="16dp"
                 android:background="@color/grey_100"
                 android:hint="@string/username"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_enddate"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/tv_mnths"
                 app:layout_constraintTop_toTopOf="@id/tv_enddate" />
 
+            <TextView
+                android:id="@+id/ed_monthstxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/grey_100"
+                android:textSize="25sp"
+                android:text="0"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@id/tv_yrs"
+                app:layout_constraintEnd_toEndOf="@id/tv_yrs"
+                app:layout_constraintTop_toBottomOf="@id/tv_yrs" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                app:layout_constraintStart_toEndOf="@id/ed_monthstxt"
+                app:layout_constraintTop_toTopOf="@id/ed_yrtext"
+                app:layout_constraintBottom_toBottomOf="@id/ed_monthstxt"
+                android:layout_marginStart="16dp"
+                android:textSize="32sp"
+                android:id="@+id/tv_addmth"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                app:layout_constraintEnd_toStartOf="@id/ed_monthstxt"
+                app:layout_constraintTop_toTopOf="@id/ed_yrtext"
+                app:layout_constraintBottom_toBottomOf="@id/ed_yrtext"
+                android:layout_marginEnd="16dp"
+                android:textSize="50sp"
+                android:id="@+id/tv_submth"/>
 
             <TextView
                 android:id="@+id/tv_mnths"
@@ -306,10 +380,11 @@
                 android:layout_marginStart="16dp"
                 android:background="@color/grey_100"
                 android:fontFamily="@font/inter_regular"
-                android:text="yrs"
+                android:text="Years"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/ed_yrs"
-                app:layout_constraintStart_toEndOf="@id/ed_yrs"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintEnd_toStartOf="@id/tv_yrs"
                 app:layout_constraintTop_toTopOf="@id/ed_yrs" />
 
             <TextView
@@ -400,7 +475,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
-                android:text="Loan Type"
+                android:text="@string/loan_type"
                 android:textColor="@color/blue_200"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -420,6 +495,44 @@
                 app:layout_constraintTop_toTopOf="@id/tv_loanType"
                 app:layout_constraintBottom_toBottomOf="@id/tv_loanType" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey_550"
+                android:id="@+id/tv_loantypeborder"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_loanType"/>
+
+
+            <TextView
+                android:id="@+id/tv_paymenttype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="@string/payment_type"
+                android:textColor="@color/blue_200"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_loantypeborder" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/ed_paymenttype"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/grey_100"
+                android:hint="@string/username"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_paymenttype"
+                app:layout_constraintBottom_toBottomOf="@id/tv_paymenttype" />
+
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cd_addloan"
                 android:layout_width="0dp"
@@ -430,7 +543,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ed_loanType"
+                app:layout_constraintTop_toBottomOf="@id/ed_paymenttype"
                 app:layout_constraintVertical_bias="0.35000002"
                 app:layout_constraintWidth_percent="0.8">
 

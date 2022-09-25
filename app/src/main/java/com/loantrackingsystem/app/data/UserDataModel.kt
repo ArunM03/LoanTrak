@@ -15,5 +15,14 @@ data class UserDataModel(
     var secondName : String = "",
     var tokenId : String = "",
     var pendingNotificationCount : Int = 0,
-    var notifications : List<NotificationDataForUser> = listOf()
+    var notifications : List<NotificationDataForUser> = listOf(),
+    var phoneNumber2 : String = "",
+    var aadhar : String = "",
+    var address : String = "",
+    var address2 : String = "",
+    var address3 : String = "",
+    var city : String = "",
+    var state : String = "",
+    var country : String = "",
+    var zipcode : String = ""
 )

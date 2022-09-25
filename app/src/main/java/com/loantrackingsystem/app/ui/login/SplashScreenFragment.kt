@@ -38,31 +38,52 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splashscreen) {
 
             val sharedPref = SharedPref(requireContext())
 
-            val curLang = sharedPref.getLanguage()
-            if(Constants.isLanguageChanged){
+            //val curLang = sharedPref.getLanguage()
+            val curCurrency = sharedPref.getCurrency()
+            if (Constants.isProfile){
+                Constants.isProfile = false
                 Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.action_splashScreenFragment_to_nav_gallery2)
-            }else{
-                if(curLang != "null"){
-                    if (sharedPref.getUserLoginStatus() ){
+                    .navigate(R.id.action_splashScreenFragment_to_userProfileFragment)
+            }else {
+                if (Constants.isLanguageChanged) {
+                    Navigation.findNavController(
+                        requireActivity(),
+                        R.id.nav_host_fragment_content_main
+                    )
+                        .navigate(R.id.action_splashScreenFragment_to_nav_gallery2)
+                } else {
+                    if (curCurrency != "null") {
+                        if (sharedPref.getUserLoginStatus()) {
 
-                        if(sharedPref.getUserDataModel().pin != "null"){
-                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                                .navigate(R.id.action_splashScreenFragment_to_pinFragment)
-                        }else{
-                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                            if (sharedPref.getUserDataModel().pin != "null") {
+                                Navigation.findNavController(
+                                    requireActivity(),
+                                    R.id.nav_host_fragment_content_main
+                                )
+                                    .navigate(R.id.action_splashScreenFragment_to_pinFragment)
+                            } else {
+                                Navigation.findNavController(
+                                    requireActivity(),
+                                    R.id.nav_host_fragment_content_main
+                                )
+                                    .navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                            }
+                        } else {
+                            Navigation.findNavController(
+                                requireActivity(),
+                                R.id.nav_host_fragment_content_main
+                            )
                                 .navigate(R.id.action_splashScreenFragment_to_loginFragment)
                         }
-                    }else{
-                        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                            .navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                    } else {
+                        Navigation.findNavController(
+                            requireActivity(),
+                            R.id.nav_host_fragment_content_main
+                        )
+                            .navigate(R.id.action_splashScreenFragment_to_currencyFragment)
                     }
-                }else{
-                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                        .navigate(R.id.action_splashScreenFragment_to_languageFragment)
                 }
             }
-
 
         }
     }

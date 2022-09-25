@@ -4,11 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioGroup
+import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.loantrackingsystem.app.MainActivity
 import com.loantrackingsystem.app.R
+import com.loantrackingsystem.app.databinding.FragmentCurrencyBinding
 import com.loantrackingsystem.app.databinding.FragmentLanguageBinding
 import com.loantrackingsystem.app.databinding.FragmentLoginBinding
 import com.loantrackingsystem.app.databinding.FragmentPinBinding
@@ -16,15 +22,15 @@ import com.loantrackingsystem.app.other.Constants
 import com.loantrackingsystem.app.other.SharedPref
 import java.util.*
 
-class LanguageFragment : Fragment(R.layout.fragment_language) {
+class CurrencyFragment : Fragment(R.layout.fragment_currency) {
 
-    lateinit var binding : FragmentLanguageBinding
+    lateinit var binding : FragmentCurrencyBinding
     lateinit var sharedPref : SharedPref
-    var language = "English"
+    var language = "INR"
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentLanguageBinding.bind(view)
+        binding = FragmentCurrencyBinding.bind(view)
 
         sharedPref = SharedPref(requireContext())
 
@@ -39,7 +45,7 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
 
         Constants.isFirstTime = true
 
-        setSpinner(binding.spLanguage, listOf("English","తెలుగు"))
+     //   setSpinner(binding.spCurrency, listOf("INR","USD"))
 
         val sharedPref = SharedPref(requireContext())
 
@@ -49,6 +55,10 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
                 binding.tvSelctlanguage.text = "Select Language"
             }
 
+        }
+
+        binding.cdLanguages.setOnClickListener {
+            showCurrencyDialog()
         }
 
 
@@ -62,25 +72,46 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
 
         binding.cdSelect.setOnClickListener {
 
-            if(binding.spLanguage.selectedItem.toString() == "English"){
-                sharedPref.setLanguage("English")
-                setAppLocale("en")
+            if(language == "INR"){
+                sharedPref.setCurrency("INR")
             }else{
-                sharedPref.setLanguage("తెలుగు")
-                setAppLocale("te")
-             //   Toast.makeText(requireContext(), "Telugu", Toast.LENGTH_SHORT).show()
+                sharedPref.setCurrency("USD")
             }
 
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
 
-            /*     if(binding.rbEnglish.isChecked){
-                     sharedPref.setLanguage("English")
-                     setAppLocale("en")
-                 }else{
-                     sharedPref.setLanguage("తెలుగు")
-                     setAppLocale("te")
-                 }
-     */
         }
+
+    }
+
+    fun showCurrencyDialog(){
+        lateinit var dialog : androidx.appcompat.app.AlertDialog
+        val customview =  layoutInflater.inflate(R.layout.dialog_currency,null,false)
+
+        val inr =  customview.findViewById<MaterialCardView>(R.id.cd_inr)
+        val usd =  customview.findViewById<MaterialCardView>(R.id.cd_usd)
+
+        inr.setOnClickListener{
+            binding.ivFlag.setImageResource(R.drawable.indianflag)
+            binding.tvCurrency.text = "INR"
+            language = "INR"
+            dialog.dismiss()
+        }
+
+
+        usd.setOnClickListener{
+            binding.ivFlag.setImageResource(R.drawable.usa)
+            binding.tvCurrency.text = "USD"
+            language = "USD"
+            dialog.dismiss()
+        }
+
+        val builder = MaterialAlertDialogBuilder(requireContext())
+            .setView(customview)
+
+
+        dialog = builder.show()
 
     }
 
@@ -98,7 +129,7 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
     }
 
 
-    fun setSpinner(spinner: Spinner, spinnerList : List<String>) {
+/*    fun setSpinner(spinner: Spinner, spinnerList : List<String>) {
         val adapter = object :
             ArrayAdapter<Any>(
                 requireContext(), R.layout.sp_layout,
@@ -132,6 +163,6 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
 
             }
         }
-    }
+    }*/
 
 }

@@ -13,9 +13,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.loantrackingsystem.app.R
-import com.loantrackingsystem.app.data.LoanDataModel
-import com.loantrackingsystem.app.data.NotificationDataForUser
-import com.loantrackingsystem.app.data.UserDataModel
+import com.loantrackingsystem.app.data.*
 
 import com.loantrackingsystem.app.databinding.FragmentViewloanBinding
 import com.loantrackingsystem.app.databinding.FragmentViewreviewBinding
@@ -39,6 +37,8 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
     var tokenId = ""
     var endDate = "0L"
     var message = ""
+    var month = 0
+    var year = 0
     lateinit var userDataModel: UserDataModel
     var secondPersonDataModel = UserDataModel()
     val loanReason = listOf("Car Loan","Hand Loan","Personal Loan","Education Loan","Home renovation Loan","Other")
@@ -265,6 +265,8 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
 
         }
 
+
+
     }
 
     private fun setData() {
@@ -309,6 +311,13 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
         if(data.loanType.isNotEmpty()){
             binding.tvLoanvalue.text = data.loanType
             //   binding.edDescription.setSelection(loanType.indexOf(data.loanType))
+        }
+
+        if(data.paymentType == ADHOC){
+            binding.tvPaymenttypevalue.text = ADHOC
+            //   binding.edDescription.setSelection(loanType.indexOf(data.loanType))
+        }else{
+            binding.tvPaymenttypevalue.text = MONTHLY
         }
 
         if(data.status == Constants.PAID){
