@@ -277,12 +277,13 @@ class RequestLoanFragment : Fragment(R.layout.fragment_addloan) {
 
             if (userData2.aadhar.isEmpty()) {
                 sendOfflineNotification()
+                mainViewModel.updateNotification(userData2, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"Please update your profile","Profile"))
             }
 
             sendNotification(PushNotification(NotificationData(username,"your new loan request is initiated, review it!"), tokenId))
 
             mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"$username created new loan",it))
-            mainViewModel.updateNotification(userData2, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"Please update your profile","Profile"))
+            mainViewModel.updateNotification(userData2, NotificationDataForUser(Calendar.getInstance().timeInMillis.toString(),"New loan request sent to ${secondPersonDataModel.firstName}",it))
 
             sendSMS(number)
 
@@ -313,6 +314,7 @@ class RequestLoanFragment : Fragment(R.layout.fragment_addloan) {
 
         mainViewModel.userDataLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             secondPersonDataModel = it
+           // Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             tokenId = it.tokenId
         })
 
@@ -518,6 +520,7 @@ class RequestLoanFragment : Fragment(R.layout.fragment_addloan) {
                         binding.edPhonenumber.text = loanPersonData[0].phone
                         mainViewModel.getUserData(loanPersonData[0].phone)
                         number = loanPersonData[0].phone
+                      //  Toast.makeText(requireContext(), "${loanPersonData[0].phone}", Toast.LENGTH_SHORT).show()
                     }
                 }
 

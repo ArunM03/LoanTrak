@@ -114,4 +114,5 @@
     <string name="user_name">వినియోగదారు పేరు</string>
     <string name="changepin">పిన్ మార్చండి</string>
     <string name="payment_type">Payment Type</string>
+    <string name="cancel_loan">Cancel Loan</string>
 </resources>

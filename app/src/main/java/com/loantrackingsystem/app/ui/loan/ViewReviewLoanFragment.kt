@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.loantrackingsystem.app.R
 import com.loantrackingsystem.app.data.*
 
@@ -234,6 +235,24 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
             secondPersonDataModel = it
         })
 
+        mainViewModel.deleteLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            myDialog.dismissProgressDialog()
+            sendNotification(PushNotification(NotificationData(userDataModel.firstName,"Cancelled the loan"),tokenId))
+            mainViewModel.updateNotification(secondPersonDataModel, NotificationDataForUser(
+                Calendar.getInstance().timeInMillis.toString(),"${userDataModel.firstName} cancelled the loan",it)
+            )
+            mainViewModel.updateNotification(userDataModel, NotificationDataForUser(
+                Calendar.getInstance().timeInMillis.toString(),"You cancelled the loan",it)
+            )
+            Toast.makeText(requireContext(), "loan cancelled successfully", Toast.LENGTH_SHORT).show()
+            requireActivity().onBackPressed()
+        })
+
+        mainViewModel.errorDeleteLoanLive.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            myDialog.dismissProgressDialog()
+            myDialog.showErrorAlertDialog(it)
+        })
+
         binding.edInterest.doAfterTextChanged {
 
             it?.let {
@@ -248,7 +267,6 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
             }
 
         }
-
 
         binding.edEmi.doAfterTextChanged {
 
@@ -265,7 +283,17 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
 
         }
 
-
+        binding.tvCancelloan.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Cancel!")
+                .setMessage("Are you sure you want to cancel ?")
+                .setPositiveButton("Yes"){  _,_ ->
+                    mainViewModel.deleteLoan(Constants.loanData)
+                    myDialog.showProgressDialog("Cancelling...Please wait",this)
+                }
+                .setNegativeButton("No",null)
+                .show()
+        }
 
     }
 
@@ -349,6 +377,8 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
             }
 
         }else{
+
+            binding.tvCancelloan.visibility = View.VISIBLE
             if (loanData.secondPersonComment.isEmpty()){
                 binding.tvChanges.visibility = View.VISIBLE
                 binding.tvChanges.text = "Loan is in Review"
@@ -358,6 +388,7 @@ class ViewReviewLoanFragment : Fragment(R.layout.fragment_viewreview) {
                 binding.tvChanges.visibility = View.VISIBLE
                 binding.ctViewloandetails.deepForEach { isEnabled = true }
             }
+
         }
 
 
